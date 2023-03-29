@@ -31,7 +31,7 @@ export const deleteProduct = createAsyncThunk(
   "products/deleteApi",
   async (payload) => {
     const response = await axios.delete(
-      `https://newramana.azurewebsites.net/api/product/${payload}`
+      `https://irp.ramanacastle.com/api/product/${payload}`
     );
     return response.data;
   }

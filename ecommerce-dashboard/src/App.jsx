@@ -10,7 +10,7 @@ import PageSettings from "./pages/PageSettings";
 import Products from "./pages/Products";
 import Users from "./pages/Users";
 import ProductDetails from "./pages/ProductDetails";
-import Genders from "./pages/Genders";
+// import Genders from "./pages/Genders";
 import { Provider } from "react-redux";
 import { store } from "../src/features/store/index";
 import CreateGender from "./pages/CreateGender";
@@ -24,6 +24,7 @@ import EditUser from "./pages/EditUser";
 import Social from "./pages/Social";
 import OrderDetails from "./pages/OrderDetails";
 import CreateSome from "./pages/CreateSome";
+import ColorCreate from "./components/modals/color/ColorCreate"
 function App() {
   return (
     <Provider store={store}>
@@ -44,12 +45,12 @@ function App() {
             <Route path="stats" element={<Blank />} />
             <Route path="homepage" element={<PageSettings />} />
             <Route path="productdetails" element={<ProductDetails />} />
-            <Route path="genders" element={<Genders />} />
             <Route path="creategender" element={<CreateGender />} />
             <Route path="categories" element={<Categories />} />
             <Route path="createcategory" element={<CreateCategory />} />
             <Route path="CreateProduct" element={<CreateProducts />} />
             <Route path="createsome" element={<CreateSome />} />
+            <Route path="colorcreate" element={<ColorCreate />} />
           </Route>
         </Routes>
       </BrowserRouter>

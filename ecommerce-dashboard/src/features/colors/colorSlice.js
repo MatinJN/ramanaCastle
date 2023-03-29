@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  colorsData: [],
+  color: [],
   loading: false,
 };
 
@@ -11,21 +11,17 @@ export const fetchAllColors = createAsyncThunk("colors/getAPI", async () => {
 
   return response.data.data;
 });
-export const colorCreate = createAsyncThunk("colors/postApi", async (payload) => {
-    const response = await axios.get("http://irp.ramanacastle.com/api/color/store",payload);
+export const createColor = createAsyncThunk("colors/postAPI", async (payload) => {
+  const response = await axios.post("http://irp.ramanacastle.com/api/color/store",payload);
+  
+  return response.data.data;
+});
+export const deleteColor = createAsyncThunk("colors/getAPI", async (payload) => {
+  const response = await axios.delete(`http://irp.ramanacastle.com/api/delete/color/${payload}`);
 
-    return response.data.data;
-  });
+  return response.data.data;
+});
 
-  export const colorUpdate = createAsyncThunk("colors/putApi", async (payload) => {
-    const response = await axios.get("http://irp.ramanacastle.com/api/color/update/1",payload);
-    return response.data.data;
-  });
-
-  export const colorDelete = createAsyncThunk("colors/deleteAPI", async (payload) => {
-    const response = await axios.get("http://irp.ramanacastle.com/api/delete/color/1",payload);
-    return response.data.data;
-  });
 
 
 
@@ -34,21 +30,12 @@ export const colorSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllColors.pending, (state, action) => {
-        state.colorsData = action.payload;
-        state.loading = true;
-      })
-      .addCase(fetchAllColors.fulfilled, (state, action) => {
-        state.loading = false;
-        state.colorsData = action.payload;
-      })
-      .addCase(fetchAllColors.rejected, (state, action) => {
-        // state.loading = false
-      });
+    builder.addCase(fetchAllColors.fulfilled, (state, action) => {
+      state.color = action.payload
+  })
+      
   },
 });
 
-export const getAllColors = (state) => state.color.colorsData;
-export const getLoading = (state) => state.color.loading;
+
 export default colorSlice.reducer;

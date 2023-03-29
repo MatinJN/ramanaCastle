@@ -1,61 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react'
+import GenderModal from '../components/modals/GenderModals'
 
-function CreateSome() {
-    const [colorName, setColorName] = useState('');
-    const [colorCode, setColorCode] = useState('');
+import { Formik } from 'formik';
+import ColorModal from '../components/modals/color/ColorModal';
+import MaterialModal from '../components/modals/MaterialModal';
+import SizeModal from '../components/modals/SizeModal';
+import { Button } from '@mui/material';
+import ColorCreate from '../components/modals/color/ColorCreate';
 
-    function handleSubmit(event) {
-        event.preventDefault();
-    }
-    const [materialName, setMaterialName] = useState('');
-    console.log(materialName);
+const CreateSome = () => {
+  return (
+    <>
+      <section>
+        <h1>Gender Create</h1>
+        <Button variant="contained">Add Gender</Button>
+        <GenderModal />
+      </section>
+      <section>
+        <h1>Material</h1>
+        <Button variant="contained">Add Material</Button>
+        <MaterialModal />
+      </section>
+      <section>
+        <h1>Color</h1>
+        <ColorCreate/>
+        <ColorModal />
+      </section>
+      <section>
+        <h1>Size</h1>
+        <Button variant="contained">Add Size</Button>
+        <SizeModal />
+      </section>
 
-   
-
-    return (
-        <>
-            <div className="section">
-            <h1>Color</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Color Name:
-                    <input
-                        type="text"
-                        value={colorName}
-                        onChange={(event) => setColorName(event.target.value)}
-                    />
-                </label>
-                <br />
-                <label>
-                    Color Code:
-                    <input
-                        type="text"
-                        value={colorCode}
-                        onChange={(event) => setColorCode(event.target.value)}
-                    />
-                </label>
-                <br />
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-        <div className="section">
-            <h1>Material</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Color Name:
-                    <input
-                        type="text"
-                        value={materialName}
-                        onChange={(event) => setMaterialName(event.target.value)}
-                    />
-                </label>
-                <br />
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-        </>
-
-    );
+    </>
+  )
 }
 
-export default CreateSome;
+export default CreateSome
