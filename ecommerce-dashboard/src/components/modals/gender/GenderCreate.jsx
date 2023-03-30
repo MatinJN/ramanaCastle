@@ -3,11 +3,11 @@ import Button from '@mui/material/Button';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createColor } from '../../../features/colors/colorSlice';
 import { useNavigate } from "react-router-dom";
-
-const ColorCreate = () => {
-  const dispatch = useDispatch();
+import { saveNewGender } from '../../../features/genders/genderSlice';
+;
+const GenderCreate = () => {
+    const dispatch = useDispatch();
   const navigate = useNavigate()
 
   
@@ -22,7 +22,7 @@ const ColorCreate = () => {
   )
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch(createColor(inputData))
+    dispatch(saveNewGender(inputData))
     console.log(inputData);
   }
   return (
@@ -54,4 +54,4 @@ const ColorCreate = () => {
   );
 }
 
-export default ColorCreate
+export default GenderCreate

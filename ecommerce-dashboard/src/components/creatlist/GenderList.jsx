@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'
+import {React, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteColor, fetchAllColors } from '../../features/colors/colorSlice';
-
-const ColorList = () => {
-
+import { deleteGender, fetchAllGenders } from '../../features/genders/genderSlice';
+const GenderList = () => {
     const navigate = useNavigate
     const dispatch = useDispatch();
-    const { color } = useSelector(state => state.color)
+    const { gender } = useSelector(state => state.gender)
+    console.log(gender);
+
     useEffect(() => {
-        dispatch(fetchAllColors())
+        dispatch(fetchAllGenders())
     }, [])
 
     const colums = [
@@ -42,15 +42,15 @@ const ColorList = () => {
                 </thead>
                 <tbody>
                     {
-                        color.map((color) => (
-                            <tr key={color.id}>
-                                <td>{color.order}</td>
-                                <td>{color.name}</td>
-                                <td>{color.color_code}</td>
-                                <td>{color.status}</td>
+                        gender.map((gender) => (
+                            <tr key={gender.id}>
+                                <td>{gender.order}</td>
+                                <td>{gender.name}</td>
+                                <td>{gender.color_code}</td>
+                                <td>{gender.status}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => dispatch(deleteColor(color.id))}>Delete</button>
-                                    <Link to={`coloredit/${color.id}`}><button className='btn btn-info' >Edit</button></Link>
+                                    <button className='btn btn-danger' onClick={() => dispatch(deleteGender(gender.id))}>Delete</button>
+                                    <Link to={`genderedit/${gender.id}`}><button className='btn btn-info' >Edit</button></Link>
                                     
                                 </td>
                             </tr>
@@ -64,4 +64,4 @@ const ColorList = () => {
     )
 }
 
-export default ColorList
+export default GenderList

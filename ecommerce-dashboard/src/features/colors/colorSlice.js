@@ -33,8 +33,8 @@ export const colorSlice = createSlice({
     builder.addCase(fetchAllColors.fulfilled, (state, action) => {
       state.color = action.payload
   })
-      
   },
+  
 });
 
 

@@ -1,35 +1,32 @@
 import React from 'react'
-import GenderModal from '../components/modals/GenderModals'
-
-import { Formik } from 'formik';
-import ColorModal from '../components/modals/color/ColorModal';
-import MaterialModal from '../components/modals/MaterialModal';
-import SizeModal from '../components/modals/SizeModal';
 import { Button } from '@mui/material';
-import ColorCreate from '../components/modals/color/ColorCreate';
+import { Link } from 'react-router-dom';
 
 const CreateSome = () => {
   return (
     <>
       <section>
         <h1>Gender Create</h1>
-        <Button variant="contained">Add Gender</Button>
-        <GenderModal />
+        <Link to= 'gendercreate'><Button variant="contained">Add Gender</Button></Link>
+        <Link to= 'genderlist'><Button variant="contained">Edit Gender</Button></Link>
+        
       </section>
       <section>
         <h1>Material</h1>
-        <Button variant="contained">Add Material</Button>
-        <MaterialModal />
+        <Link to= 'materialcreate'><Button variant="contained">Add Color</Button></Link>
+        <Link to= 'materiallist'><Button variant="contained">Edit Color</Button></Link>
+        
       </section>
       <section>
         <h1>Color</h1>
-        <ColorCreate/>
-        <ColorModal />
+        <Link to= 'colorcreate'><Button variant="contained">Add Color</Button></Link>
+        <Link to= 'colorlist'><Button variant="contained">Edit Color</Button></Link>
+        
       </section>
       <section>
         <h1>Size</h1>
         <Button variant="contained">Add Size</Button>
-        <SizeModal />
+        
       </section>
 
     </>

@@ -10,7 +10,6 @@ import PageSettings from "./pages/PageSettings";
 import Products from "./pages/Products";
 import Users from "./pages/Users";
 import ProductDetails from "./pages/ProductDetails";
-// import Genders from "./pages/Genders";
 import { Provider } from "react-redux";
 import { store } from "../src/features/store/index";
 import CreateGender from "./pages/CreateGender";
@@ -24,7 +23,12 @@ import EditUser from "./pages/EditUser";
 import Social from "./pages/Social";
 import OrderDetails from "./pages/OrderDetails";
 import CreateSome from "./pages/CreateSome";
-import ColorCreate from "./components/modals/color/ColorCreate"
+import ColorEdit from "./components/modals/color/ColorEdit";
+import ColorCreate from "./components/modals/color/ColorCreate";
+import ColorList from "./components/creatlist/ColorList";
+import GernderEdit from "./components/modals/gender/GernderEdit";
+import GenderCreate from "./components/modals/gender/GenderCreate";
+import GenderList from "./components/creatlist/GenderList";
 function App() {
   return (
     <Provider store={store}>
@@ -50,7 +54,13 @@ function App() {
             <Route path="createcategory" element={<CreateCategory />} />
             <Route path="CreateProduct" element={<CreateProducts />} />
             <Route path="createsome" element={<CreateSome />} />
-            <Route path="colorcreate" element={<ColorCreate />} />
+
+            <Route path="createsome/colorlist/coloredit/:id" element={<ColorEdit />} />
+            <Route path="createsome/colorcreate" element={<ColorCreate />} />
+            <Route path="createsome/colorlist" element={<ColorList />} />
+            <Route path="createsome/genderlist.genderedit/:id" element={<GernderEdit />} />
+            <Route path="createsome/gendercreate" element={<GenderCreate />} />
+            <Route path="createsome/genderlist" element={<GenderList />} />
           </Route>
         </Routes>
       </BrowserRouter>
