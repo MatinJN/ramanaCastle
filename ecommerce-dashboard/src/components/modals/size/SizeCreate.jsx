@@ -4,9 +4,8 @@ import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { createMaterials } from '../../../features/materials/materialSlice';
-
-const MaterialCreate = () => {
+import { saveNewSize } from '../../../features/size/sizeSlice';
+const SizeCreate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
   
@@ -22,7 +21,7 @@ const MaterialCreate = () => {
     )
     function handleSubmit(event) {
       event.preventDefault();
-      dispatch(createMaterials(inputData))
+      dispatch(saveNewSize(inputData))
       console.log(inputData);
     }
     return (
@@ -54,4 +53,4 @@ const MaterialCreate = () => {
     );
 }
 
-export default MaterialCreate
+export default SizeCreate

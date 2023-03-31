@@ -8,6 +8,7 @@ const ColorList = () => {
     const navigate = useNavigate
     const dispatch = useDispatch();
     const { color } = useSelector(state => state.color)
+    console.log('color',color);
     useEffect(() => {
         dispatch(fetchAllColors())
     }, [])

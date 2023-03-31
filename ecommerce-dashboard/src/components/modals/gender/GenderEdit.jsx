@@ -3,21 +3,13 @@ import Button from '@mui/material/Button';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { createColor } from '../../../features/colors/colorSlice';
 import { useNavigate } from "react-router-dom";
-import { updateMaterials } from '../../../features/materials/materialSlice';
+const GenderEdit = () => {
 
-const MaterialEdit = () => {
-    const [fullscreen, setFullscreen] = useState(true);
-    const [show, setShow] = React.useState(false);
-  
     const dispatch = useDispatch();
     const navigate = useNavigate()
-  
-    function handleShow(breakpoint) {
-      setFullscreen(breakpoint);
-      setShow(true);
-    }
-  
+
     const [inputData, setInputData] = useState({
       "name:az": '',
       "name:en": '',
@@ -28,10 +20,9 @@ const MaterialEdit = () => {
     )
     function handleSubmit(event) {
       event.preventDefault();
-        dispatch(updateMaterials(inputData))
+        dispatch(createColor(inputData))
         console.log(inputData);
         
-  
     }
     return (
       <div>
@@ -62,4 +53,4 @@ const MaterialEdit = () => {
     )
 }
 
-export default MaterialEdit
+export default GenderEdit

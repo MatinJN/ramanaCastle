@@ -10,8 +10,6 @@ const ColorCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  
-
   const [inputData, setInputData] = useState({
     "name:az": '',
     "name:en": '',
@@ -23,8 +21,9 @@ const ColorCreate = () => {
   function handleSubmit(event) {
     event.preventDefault();
     dispatch(createColor(inputData))
-    console.log(inputData);
+    
   }
+  
   return (
     <div>
       <Form onSubmit={handleSubmit}>
@@ -34,11 +33,11 @@ const ColorCreate = () => {
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Color Name en</Form.Label>
-          <Form.Control type="text" placeholder="Enter Color Name" onChange={e => setInputData({ ...inputData, "name:en": e.target.value })} />
+          <Form.Control type="text" placeholder="Enter Color Name" onChange={e => setInputData({ ...inputData, 'name:en': e.target.value })} />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Color Code</Form.Label>
-          <Form.Control type="text" placeholder="#000000" onChange={e => setInputData({ ...inputData, color_code: e.target.value })} />
+          <Form.Control type="text" placeholder="#000000" onChange={e => setInputData({ ...inputData, color_code: e.target.value })}/>
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Color Order</Form.Label>

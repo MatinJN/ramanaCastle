@@ -13,8 +13,8 @@ const CreateSome = () => {
       </section>
       <section>
         <h1>Material</h1>
-        <Link to= 'materialcreate'><Button variant="contained">Add Color</Button></Link>
-        <Link to= 'materiallist'><Button variant="contained">Edit Color</Button></Link>
+        <Link to= 'materialcreate'><Button variant="contained">Add Material</Button></Link>
+        <Link to= 'materiallist'><Button variant="contained">Edit Material</Button></Link>
         
       </section>
       <section>
@@ -25,7 +25,8 @@ const CreateSome = () => {
       </section>
       <section>
         <h1>Size</h1>
-        <Button variant="contained">Add Size</Button>
+        <Link to= 'sizecreate'><Button variant="contained">Add Size</Button></Link>
+        <Link to= 'sizelist'><Button variant="contained">Edit Size</Button></Link>
         
       </section>
 

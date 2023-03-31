@@ -7,16 +7,11 @@ import { createColor } from '../../../features/colors/colorSlice';
 import { useNavigate } from "react-router-dom";
 
 const ColorEdit = () => {
-  const [fullscreen, setFullscreen] = useState(true);
-  const [show, setShow] = React.useState(false);
+ 
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  function handleShow(breakpoint) {
-    setFullscreen(breakpoint);
-    setShow(true);
-  }
 
   const [inputData, setInputData] = useState({
     "name:az": '',

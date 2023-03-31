@@ -3,19 +3,13 @@ import Button from '@mui/material/Button';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createColor } from '../../../features/colors/colorSlice';
 import { useNavigate } from "react-router-dom";
-const GernderEdit = () => {
-    const [fullscreen, setFullscreen] = useState(true);
-    const [show, setShow] = React.useState(false);
-  
+import { updateSize } from '../../../features/size/sizeSlice';
+
+const SizeEdit = () => {
+    
     const dispatch = useDispatch();
     const navigate = useNavigate()
-  
-    function handleShow(breakpoint) {
-      setFullscreen(breakpoint);
-      setShow(true);
-    }
   
     const [inputData, setInputData] = useState({
       "name:az": '',
@@ -27,7 +21,7 @@ const GernderEdit = () => {
     )
     function handleSubmit(event) {
       event.preventDefault();
-        dispatch(createColor(inputData))
+        dispatch(updateSize(inputData))
         console.log(inputData);
         
   
@@ -61,4 +55,4 @@ const GernderEdit = () => {
     )
 }
 
-export default GernderEdit
+export default SizeEdit

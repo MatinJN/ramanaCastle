@@ -6,7 +6,8 @@ const GenderList = () => {
     const navigate = useNavigate
     const dispatch = useDispatch();
     const { gender } = useSelector(state => state.gender)
-    console.log(gender);
+    
+    console.log("genderxzx",gender.translations);
 
     useEffect(() => {
         dispatch(fetchAllGenders())
@@ -14,23 +15,24 @@ const GenderList = () => {
 
     const colums = [
         {
-            name: 'Order'
-        },
-        {
             name: 'Name'
         },
         {
-            name: 'Code'
+            name: 'Slug'
         },
         {
             name: 'Status'
         },
-
+        {
+            name: 'Order'
+        },
+        
     ]
 
 
     return (
         <div className='container mt-5'>
+            <h1>Gender List</h1>
             <table className='table'>
                 <thead>
                     <tr>
@@ -44,18 +46,16 @@ const GenderList = () => {
                     {
                         gender.map((gender) => (
                             <tr key={gender.id}>
-                                <td>{gender.order}</td>
                                 <td>{gender.name}</td>
-                                <td>{gender.color_code}</td>
+                                <td>{gender.slug}</td>
                                 <td>{gender.status}</td>
+                                <td>{gender.order}</td>
                                 <td>
                                     <button className='btn btn-danger' onClick={() => dispatch(deleteGender(gender.id))}>Delete</button>
                                     <Link to={`genderedit/${gender.id}`}><button className='btn btn-info' >Edit</button></Link>
-                                    
                                 </td>
                             </tr>
                         ))
-
                     }
                 </tbody>
             </table>

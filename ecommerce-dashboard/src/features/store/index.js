@@ -5,6 +5,7 @@ import productReducer from "../products/productSlice";
 import materialReducer from "../materials/materialSlice";
 import colorReducer from "../colors/colorSlice";
 import orderReducer from "../order/orderSlice";
+import sizeReducer from "../size/sizeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     material: materialReducer,
     color: colorReducer,
     order: orderReducer,
+    size: sizeReducer
   },
 });

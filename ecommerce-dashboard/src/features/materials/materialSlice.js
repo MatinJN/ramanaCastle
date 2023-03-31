@@ -13,20 +13,20 @@ export const fetchAllMaterials = createAsyncThunk("materials/getAPI", async () =
     return response.data.data;
 });
 export const createMaterials = createAsyncThunk("materials/postAPI", async (payload) => {
-    const response = await axios.post("http://irp.ramanacastle.com/api/material/store",payload);
+    const response = await axios.post("http://irp.ramanacastle.com/api/material/store", payload);
 
     return response.data.data;
 });
 
 export const updateMaterials = createAsyncThunk("materials/putAPI", async (payload) => {
-    const response = await axios.post(`http://irp.ramanacastle.com/api/delete/color/${payload}`);
+    const response = await axios.post(`http://irp.ramanacastle.com/api/material/update/${payload}`);
 
     return response.data.data;
 });
 
 
 export const deleteMaterials = createAsyncThunk("materials/putAPI", async (payload) => {
-    const response = await axios.delete(`http://irp.ramanacastle.com/api/delete/color/${payload}`);
+    const response = await axios.delete(`http://irp.ramanacastle.com/api/delete/material/${payload}`);
 
     return response.data.data;
 });
@@ -38,7 +38,7 @@ export const materialSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchAllMaterials.pending, (state, action) => {
 
-            state.material = action.payload
+            state.materials = action.payload
             state.loading = true
         })
             .addCase(fetchAllMaterials.fulfilled, (state, action) => {
@@ -46,12 +46,12 @@ export const materialSlice = createSlice({
                 state.material = action.payload;
             })
             .addCase(fetchAllMaterials.rejected, (state, action) => {
-                
+
             })
 
     }
 })
 
-export const getAllMaterials = (state) => state.material.materialsData;
+export const getAllMaterials = (state) => state.material.material;
 export const getLoading = (state) => state.material.loading
 export default materialSlice.reducer

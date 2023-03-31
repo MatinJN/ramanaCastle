@@ -1,16 +1,16 @@
 import {React, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteMaterials, fetchAllMaterials } from '../../features/materials/materialSlice';
+import { deleteSize, fetchAllsize } from '../../features/size/sizeSlice';
 
-const MaterialList = () => {
+const SizeList = () => {
     const navigate = useNavigate
     const dispatch = useDispatch();
-    const { material } = useSelector(state => state.material)
-    console.log("salam",material);
+    const { size } = useSelector(state => state.size)
+    console.log("salam",size);
 
     useEffect(() => {
-        dispatch(fetchAllMaterials())
+        dispatch(fetchAllsize())
     }, [])
 
     const colums = [
@@ -43,15 +43,15 @@ const MaterialList = () => {
                 </thead>
                 <tbody>
                     {
-                        material.map((material) => (
-                            <tr key={material.id}>
-                                <td>{material.order}</td>
-                                <td>{material.name}</td>
-                                <td>{material.color_code}</td>
-                                <td>{material.status}</td>
+                        size.map((size) => (
+                            <tr key={size.id}>
+                                <td>{size.order}</td>
+                                <td>{size.name}</td>
+                                <td>{size.color_code}</td>
+                                <td>{size.status}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => dispatch(deleteMaterials(material.id))}>Delete</button>
-                                    <Link to={`genderedit/${material.id}`}><button className='btn btn-info' >Edit</button></Link>
+                                    <button className='btn btn-danger' onClick={() => dispatch(deleteSize(size.id))}>Delete</button>
+                                    <Link to={`sizeedit/${size.id}`}><button className='btn btn-info' >Edit</button></Link>
                                     
                                 </td>
                             </tr>
@@ -65,4 +65,4 @@ const MaterialList = () => {
     )
 }
 
-export default MaterialList
+export default SizeList

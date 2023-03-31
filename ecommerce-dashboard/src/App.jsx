@@ -26,9 +26,15 @@ import CreateSome from "./pages/CreateSome";
 import ColorEdit from "./components/modals/color/ColorEdit";
 import ColorCreate from "./components/modals/color/ColorCreate";
 import ColorList from "./components/creatlist/ColorList";
-import GernderEdit from "./components/modals/gender/GernderEdit";
+import GenderEdit from "./components/modals/gender/GenderEdit";
 import GenderCreate from "./components/modals/gender/GenderCreate";
 import GenderList from "./components/creatlist/GenderList";
+import MaterialEdit from "./components/modals/material/MaterialEdit";
+import MaterialCreate from "./components/modals/material/MaterialCreate";
+import MaterialList from "./components/creatlist/MaterialList";
+import SizeEdit from "./components/modals/size/SizeEdit";
+import SizeCreate from "./components/modals/size/SizeCreate";
+import SizeList from "./components/creatlist/SizeList";
 function App() {
   return (
     <Provider store={store}>
@@ -58,9 +64,18 @@ function App() {
             <Route path="createsome/colorlist/coloredit/:id" element={<ColorEdit />} />
             <Route path="createsome/colorcreate" element={<ColorCreate />} />
             <Route path="createsome/colorlist" element={<ColorList />} />
-            <Route path="createsome/genderlist.genderedit/:id" element={<GernderEdit />} />
+
+            <Route path="createsome/genderlist.genderedit/:id" element={<GenderEdit />} />
             <Route path="createsome/gendercreate" element={<GenderCreate />} />
             <Route path="createsome/genderlist" element={<GenderList />} />
+            
+            <Route path="createsome/materiallist.materialedit/:id" element={<MaterialEdit />} />
+            <Route path="createsome/materialcreate" element={<MaterialCreate />} />
+            <Route path="createsome/materiallist" element={<MaterialList />} />
+
+            <Route path="createsome/sizelist.sizeedit/:id" element={<SizeEdit />} />
+            <Route path="createsome/sizecreate" element={<SizeCreate />} />
+            <Route path="createsome/sizelist" element={<SizeList />} />
           </Route>
         </Routes>
       </BrowserRouter>

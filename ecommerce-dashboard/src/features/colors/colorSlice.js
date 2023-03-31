@@ -13,7 +13,6 @@ export const fetchAllColors = createAsyncThunk("colors/getAPI", async () => {
 });
 export const createColor = createAsyncThunk("colors/postAPI", async (payload) => {
   const response = await axios.post("http://irp.ramanacastle.com/api/color/store",payload);
-  
   return response.data.data;
 });
 export const deleteColor = createAsyncThunk("colors/getAPI", async (payload) => {
