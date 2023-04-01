@@ -15,7 +15,7 @@ const MaterialCreate = () => {
     const [inputData, setInputData] = useState({
       "name:az": '',
       "name:en": '',
-      color_code: '',
+      slug: '',
       status: '',
       order: '',
     }
@@ -29,24 +29,24 @@ const MaterialCreate = () => {
       <div>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Color Name az</Form.Label>
-            <Form.Control type="text" placeholder="Enter Color Name" onChange={e => setInputData({ ...inputData, 'name:az': e.target.value })} />
+            <Form.Label>Material Name az</Form.Label>
+            <Form.Control type="text" placeholder="Enter Material Name" onChange={e => setInputData({ ...inputData, 'name:az': e.target.value })} />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Color Name en</Form.Label>
-            <Form.Control type="text" placeholder="Enter Color Name" onChange={e => setInputData({ ...inputData, "name:en": e.target.value })} />
+            <Form.Label>Material Name en</Form.Label>
+            <Form.Control type="text" placeholder="Enter Material Name" onChange={e => setInputData({ ...inputData, "name:en": e.target.value })} />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Color Code</Form.Label>
-            <Form.Control type="text" placeholder="#000000" onChange={e => setInputData({ ...inputData, color_code: e.target.value })} />
+            <Form.Label>Material Code</Form.Label>
+            <Form.Control type="text" placeholder="slug" onChange={e => setInputData({ ...inputData, slug: e.target.value })} />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Color Order</Form.Label>
-            <Form.Control type="text" placeholder="Enter Color Order" onChange={e => setInputData({ ...inputData, order: e.target.value })} />
+            <Form.Label>Material Order</Form.Label>
+            <Form.Control type="text" placeholder="Enter Material Order" onChange={e => setInputData({ ...inputData, order: e.target.value })} />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Color Status</Form.Label>
-            <Form.Control type="text" placeholder="Enter Color Status" onChange={e => setInputData({ ...inputData, status: e.target.value })} />
+            <Form.Label>Material Status</Form.Label>
+            <Form.Control type="text" placeholder="Enter Material Status" onChange={e => setInputData({ ...inputData, status: e.target.value })} />
           </Form.Group>
           <Button variant="contained" type='submit'>SEND</Button>
         </Form>

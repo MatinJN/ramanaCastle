@@ -12,11 +12,9 @@ const SizeEdit = () => {
     const navigate = useNavigate()
   
     const [inputData, setInputData] = useState({
-      "name:az": '',
-      "name:en": '',
-      color_code: '',
-      status:'',
-      order:'',
+      size: '',
+      status: '',
+      order: '',
     }
     )
     function handleSubmit(event) {
@@ -29,28 +27,20 @@ const SizeEdit = () => {
     return (
       <div>
         <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Color Name az</Form.Label>
-                <Form.Control type="text" placeholder="Enter Color Name" onChange={e=>setInputData({...inputData , 'name:az':e.target.value})} />
-              </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Color Name en</Form.Label>
-                <Form.Control type="text" placeholder="Enter Color Name" onChange={e=>setInputData({...inputData , "name:en":e.target.value})} />
-              </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Color Code</Form.Label>
-                <Form.Control type="text" placeholder="#000000" onChange={e=>setInputData({...inputData , color_code:e.target.value})} />
-              </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Color Order</Form.Label>
-                <Form.Control type="text" placeholder="Enter Color Order" onChange={e=>setInputData({...inputData , order:e.target.value})} />
-              </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Color Status</Form.Label>
-                <Form.Control type="text" placeholder="Enter Color Status" onChange={e=>setInputData({...inputData , status:e.target.value})} />
-              </Form.Group>
-              <Button variant="contained" type='submit'>SEND</Button>
-            </Form>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Size</Form.Label>
+            <Form.Control type="text" placeholder="Size" onChange={e => setInputData({ ...inputData, size: e.target.value })} />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Size Order</Form.Label>
+            <Form.Control type="text" placeholder="Enter Color Order" onChange={e => setInputData({ ...inputData, order: e.target.value })} />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Size Status</Form.Label>
+            <Form.Control type="text" placeholder="Enter Color Status" onChange={e => setInputData({ ...inputData, status: e.target.value })} />
+          </Form.Group>
+          <Button variant="contained" type='submit'>SEND</Button>
+        </Form>
       </div>
     )
 }

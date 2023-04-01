@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import './sidebar.scss'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { images } from '../../constants'
 import sidebarNav from '../../configs/sidebarNav'
 // import Accordion from "react-bootstrap/Accordion";
 const Sidebar = () => {
     const [activeIndex, setActiveIndex] = useState(0)
     const location = useLocation()
+    const navigate = useNavigate()
+    const logoutHandler = () => {
+        try {
+            localStorage.removeItem('userInfo')
+            window.location.reload(false)
+        } catch (e) {
+            alert("couldnt")
+        }
 
+    }
     useEffect(() => {
         const curPath = window.location.pathname.split('/')[1]
         const activeItem = sidebarNav.findIndex(item => item.section === curPath)
@@ -48,7 +57,7 @@ const Sidebar = () => {
                     <div className="sidebar__menu__item__icon">
                         <i className='bx bx-log-out'></i>
                     </div>
-                    <div className="sidebar__menu__item__txt">
+                    <div onClick={() => logoutHandler()} className="sidebar__menu__item__txt">
                         Logout
                     </div>
                 </div>

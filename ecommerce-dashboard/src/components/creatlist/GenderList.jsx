@@ -1,6 +1,7 @@
 import {React, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { deleteGender, fetchAllGenders } from '../../features/genders/genderSlice';
 const GenderList = () => {
     const navigate = useNavigate
@@ -12,6 +13,18 @@ const GenderList = () => {
     useEffect(() => {
         dispatch(fetchAllGenders())
     }, [])
+
+    const deleteHandler = ({ id }) => {
+        try {
+            dispatch(deleteGender(id))
+            setTimeout(() => {
+                window.location.reload(false);
+                toast.success("Color Deleted")
+            }, 300)
+        } catch (error) {
+            toast.error("yeniden ceht edin")
+        }
+    }
 
     const colums = [
         {
@@ -51,7 +64,7 @@ const GenderList = () => {
                                 <td>{gender.status}</td>
                                 <td>{gender.order}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => dispatch(deleteGender(gender.id))}>Delete</button>
+                                    <button className='btn btn-danger' onClick={() =>deleteHandler(gender) }>Delete</button>
                                     <Link to={`genderedit/${gender.id}`}><button className='btn btn-info' >Edit</button></Link>
                                 </td>
                             </tr>

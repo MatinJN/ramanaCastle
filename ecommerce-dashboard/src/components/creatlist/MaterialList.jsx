@@ -1,6 +1,7 @@
 import {React, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { deleteMaterials, fetchAllMaterials } from '../../features/materials/materialSlice';
 
 const MaterialList = () => {
@@ -13,18 +14,30 @@ const MaterialList = () => {
         dispatch(fetchAllMaterials())
     }, [])
 
+    const deleteHandler = ({ id }) => {
+        try {
+            dispatch(deleteMaterials(id))
+            setTimeout(() => {
+                window.location.reload(false);
+                toast.success("Color Deleted")
+            }, 300)
+        } catch (error) {
+            toast.error("yeniden ceht edin")
+        }
+    }
+
     const colums = [
-        {
-            name: 'Order'
-        },
         {
             name: 'Name'
         },
         {
-            name: 'Code'
+            name: 'Order'
         },
         {
             name: 'Status'
+        },
+        {
+            name: 'Slug'
         },
 
     ]
@@ -45,13 +58,13 @@ const MaterialList = () => {
                     {
                         material.map((material) => (
                             <tr key={material.id}>
-                                <td>{material.order}</td>
                                 <td>{material.name}</td>
-                                <td>{material.color_code}</td>
+                                <td>{material.order}</td>
                                 <td>{material.status}</td>
+                                <td>{material.slug}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => dispatch(deleteMaterials(material.id))}>Delete</button>
-                                    <Link to={`genderedit/${material.id}`}><button className='btn btn-info' >Edit</button></Link>
+                                    <button className='btn btn-danger' onClick={() => deleteHandler()}>Delete</button>
+                                    <Link to={`materialedit/${material.id}`}><button className='btn btn-info' >Edit</button></Link>
                                     
                                 </td>
                             </tr>

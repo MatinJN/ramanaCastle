@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  color: [],
+  colors: [],
   loading: false,
 };
 
@@ -30,7 +30,7 @@ export const colorSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchAllColors.fulfilled, (state, action) => {
-      state.color = action.payload
+      state.colors = action.payload
   })
   },
   

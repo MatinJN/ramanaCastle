@@ -4,9 +4,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import "../scss/login.scss";
 import logo from "../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState();
+
+
 
   const loginHandler = async () => {
     try {
@@ -17,7 +22,10 @@ const Login = () => {
           password: password,
         }
       );
-      alert("no error");
+      setUserInfo(data)
+      localStorage.setItem("userInfo", JSON.stringify(data))
+      window.location.reload(false);
+      navigate('/')
     } catch (error) {
       alert("error");
     }

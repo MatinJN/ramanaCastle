@@ -1,27 +1,36 @@
 import {React, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { deleteSize, fetchAllsize } from '../../features/size/sizeSlice';
 
 const SizeList = () => {
     const navigate = useNavigate
     const dispatch = useDispatch();
     const { size } = useSelector(state => state.size)
-    console.log("salam",size);
 
     useEffect(() => {
         dispatch(fetchAllsize())
     }, [])
 
+    const deleteHandler = ({ id }) => {
+        try {
+            dispatch(deleteSize(id))
+            setTimeout(() => {
+                window.location.reload(false);
+                toast.success("Color Deleted")
+            }, 300)
+        } catch (error) {
+            toast.error("yeniden ceht edin")
+        }
+    }
+
     const colums = [
         {
+            name: 'Size'
+        },
+        {
             name: 'Order'
-        },
-        {
-            name: 'Name'
-        },
-        {
-            name: 'Code'
         },
         {
             name: 'Status'
@@ -45,12 +54,11 @@ const SizeList = () => {
                     {
                         size.map((size) => (
                             <tr key={size.id}>
+                                <td>{size.size}</td>
                                 <td>{size.order}</td>
-                                <td>{size.name}</td>
-                                <td>{size.color_code}</td>
                                 <td>{size.status}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => dispatch(deleteSize(size.id))}>Delete</button>
+                                    <button className='btn btn-danger' onClick={() => deleteHandler()}>Delete</button>
                                     <Link to={`sizeedit/${size.id}`}><button className='btn btn-info' >Edit</button></Link>
                                     
                                 </td>
