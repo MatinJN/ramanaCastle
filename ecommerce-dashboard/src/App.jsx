@@ -12,9 +12,7 @@ import Users from "./pages/Users";
 import ProductDetails from "./pages/ProductDetails";
 import { Provider } from "react-redux";
 import { store } from "../src/features/store/index";
-import CreateGender from "./pages/CreateGender";
 import Categories from "./pages/Categories";
-import CreateCategory from "./pages/CreateCategory";
 import CreateProducts from "./pages/CreateProduct";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
@@ -35,6 +33,9 @@ import MaterialList from "./components/creatlist/MaterialList";
 import SizeEdit from "./components/modals/size/SizeEdit";
 import SizeCreate from "./components/modals/size/SizeCreate";
 import SizeList from "./components/creatlist/SizeList";
+import CategoryList from "./components/creatlist/CategoryList";
+import CategoryCreate from "./components/modals/category/CategoryCreate";
+import CategoryEdit from "./components/modals/category/CategoryEdit";
 function App() {
   const [user, setUser] = useState()
 
@@ -42,15 +43,12 @@ function App() {
     if (localStorage.getItem("userInfo")) {
       setUser(JSON.parse(localStorage.getItem("userInfo")))
     }
-    // console.log(user.token)
+    
 
   }, [])
   return (
-
     <Provider store={store}>
-
-
-      {user && user.token != "undefined"
+      {user && user.token !== "undefined"
         ? (
           <BrowserRouter>
             <Routes>
@@ -69,9 +67,7 @@ function App() {
                 <Route path="stats" element={<Blank />} />
                 <Route path="homepage" element={<PageSettings />} />
                 <Route path="productdetails" element={<ProductDetails />} />
-                <Route path="creategender" element={<CreateGender />} />
                 <Route path="categories" element={<Categories />} />
-                <Route path="createcategory" element={<CreateCategory />} />
                 <Route path="CreateProduct" element={<CreateProducts />} />
                 <Route path="createsome" element={<CreateSome />} />
 
@@ -90,6 +86,10 @@ function App() {
                 <Route path="createsome/sizelist/sizeedit/:id" element={<SizeEdit />} />
                 <Route path="createsome/sizecreate" element={<SizeCreate />} />
                 <Route path="createsome/sizelist" element={<SizeList />} />
+                
+                <Route path="createsome/categorylist/categoryedit/:id" element={<CategoryEdit />} />
+                <Route path="createsome/categorycreate" element={<CategoryCreate />} />
+                <Route path="createsome/categorylist" element={<CategoryList />} />
               </Route>
             </Routes>
           </BrowserRouter>
@@ -103,11 +103,6 @@ function App() {
           </BrowserRouter>
 
         )}
-
-
-
-
-
     </Provider>
   );
 }

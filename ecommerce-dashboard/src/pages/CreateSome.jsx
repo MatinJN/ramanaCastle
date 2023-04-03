@@ -27,7 +27,10 @@ const CreateSome = () => {
         <h1>Size</h1>
         <Link to= 'sizecreate'><Button variant="contained">Add Size</Button></Link>
         <Link to= 'sizelist'><Button variant="contained">Edit Size</Button></Link>
-        
+      </section><section>
+        <h1>Catergory</h1>
+        <Link to= 'categorycreate'><Button variant="contained">Add Catergory</Button></Link>
+        <Link to= 'categorylist'><Button variant="contained">Edit Catergory</Button></Link>
       </section>
 
     </>

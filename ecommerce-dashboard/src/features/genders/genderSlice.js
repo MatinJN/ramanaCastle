@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    gender: [],
+    genders: [],
     loading: false
 }
 
@@ -32,7 +32,7 @@ export const genderSlice = createSlice({
     },
     extraReducers: (builder)=>{
         builder.addCase(fetchAllGenders.fulfilled, (state, action) => {
-            state.gender = action.payload
+            state.genders = action.payload
         })
     }
 })

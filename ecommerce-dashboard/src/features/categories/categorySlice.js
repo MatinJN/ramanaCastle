@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  categoriesData: [],
+  categories: [],
   loading: false,
 };
 
@@ -21,34 +21,24 @@ export const saveNewCategory = createAsyncThunk(
   "categories/postApi",
   async (payload) => {
     const response = await axios.post(
-      "http://irp.ramanacastle.com/api/categroy/update/31",
+      "http://irp.ramanacastle.com/api/categroy/store",
       payload
     );
     return response.data;
   }
 );
-
 
 export const updateCategory = createAsyncThunk(
   "categories/putApi",
-  async (payload) => {
-    const response = await axios.post(
-      "http://irp.ramanacastle.com/api/categroy/update/31",
-      payload
-    );
+  async (payload) => {const response = await axios.post(`http://irp.ramanacastle.com/api/categroy/update/${payload}`);
     return response.data;
   }
 );
-
-
 
 export const deleteCategory = createAsyncThunk(
   "categories/deleteApi",
   async (payload) => {
-    const response = await axios.post(
-      "http://irp.ramanacastle.com/api/delete/category/1",
-      payload
-    );
+    const response = await axios.post(`http://irp.ramanacastle.com/api/categroy/update/${payload}`);
     return response.data;
   }
 );
@@ -59,12 +49,12 @@ export const categorySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllCategories.pending, (state, action) => {
-        state.categoriesData = action.payload;
+        state.categories = action.payload;
         state.loading = true;
       })
       .addCase(fetchAllCategories.fulfilled, (state, action) => {
         state.loading = false;
-        state.categoriesData = action.payload;
+        state.categories = action.payload;
       })
       .addCase(fetchAllCategories.rejected, (state, action) => {
         // state.loading = false
@@ -78,6 +68,5 @@ export const categorySlice = createSlice({
   },
 });
 
-export const getAllCategories = (state) => state.category.categoriesData;
-export const getLoading = (state) => state.category.loading;
+
 export default categorySlice.reducer;

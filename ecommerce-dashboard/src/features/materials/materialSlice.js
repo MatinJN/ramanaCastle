@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    material: [],
+    materials: [],
     loading: false
 }
 
@@ -36,22 +36,13 @@ export const materialSlice = createSlice({
     reducers: {
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchAllMaterials.pending, (state, action) => {
-
+        builder.addCase(fetchAllMaterials.fulfilled, (state, action) => {
             state.materials = action.payload
             state.loading = true
         })
-            .addCase(fetchAllMaterials.fulfilled, (state, action) => {
-                state.loading = false;
-                state.material = action.payload;
-            })
-            .addCase(fetchAllMaterials.rejected, (state, action) => {
-
-            })
 
     }
 })
 
-export const getAllMaterials = (state) => state.material.material;
-export const getLoading = (state) => state.material.loading
+
 export default materialSlice.reducer

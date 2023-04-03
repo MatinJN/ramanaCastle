@@ -41,12 +41,12 @@ const sidebarNav = [
     icon: <i className="bx bx-user"></i>,
     text: "Create Some",
   },
-  {
-    link: "/login",
-    section: "Login",
-    icon: <i className="bx bx-line-chart"></i>,
-    text: "Login",
-  },
+  // {
+  //   link: "/login",
+  //   section: "Login",
+  //   icon: <i className="bx bx-line-chart"></i>,
+  //   text: "Login",
+  // },
   {
     link: "/settings",
     section: "settings",

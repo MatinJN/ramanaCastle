@@ -8,11 +8,9 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllCategories,
-  getAllCategories,
 } from "../features/categories/categorySlice";
 import {
-  fetchAllMaterials,
-  getAllMaterials,
+  fetchAllMaterials
 } from "../features/materials/materialSlice";
 import {
   fetchAllGenders,
@@ -42,10 +40,12 @@ const CreateProduct = () => {
 
   let dispatch = useDispatch();
 //   const loading = useSelector(getLoading);
-  const categories = useSelector(getAllCategories);
+const { catergorys } = useSelector(state => state.category)
   const { colors } = useSelector(state => state.color)
-  const {gender} = useSelector(state => state.color);
-  let materials = useSelector(getAllMaterials);
+  const {genders} = useSelector(state => state.gender);
+  const {materials} = useSelector(state => state.material);
+  console.log(materials);
+  
 
   useEffect(() => {
     dispatch(fetchAllCategories());
@@ -54,41 +54,50 @@ const CreateProduct = () => {
     dispatch(fetchAllGenders());
   }, [dispatch]);
 
+  const req = new FormData()
+
   const submitHandler = (data) => {
-    var req = new FormData();
-    req.append("Name", data.Name);
-    for (const image of data.Images) {
-      req.append("Images", image);
-    }
+    console.log(data);
     req.append("Images", data.Images);
     req.append("Description", data.Description);
-    data.MaterialIds.forEach((id, index) => {
-      req.append(`MaterialIds[${index}]`, id);
-    });
-    data.ColorIds.forEach((id, index) => {
-      req.append(`ColorIds[${index}]`, id);
-    });
     req.append("Price", data.Price);
-    req.append("GenderId", data.GenderId);
-    req.append("CategoryId", data.CategoryId);
     req.append("StockKeepingUnit", data.StockKeepingUnit);
-    dispatch(saveNewProduct(req));
+    req.append("Category", data.Category);
+    req.append("Gender", data.Gender);
+    req.append("Color", data.Color);
+    req.append("Material", data.Material);
+    req.append("Name", data.Name);
+    req.append("Price", data.Price);
+    req.append("StockKeepingUnit", data.StockKeepingUnit);
+    req.append("Category", data.Category);
+    req.append("Gender", data.Gender);
+    req.append("Color", data.Color);
+    req.append("Material", data.Material);
+    req.append("Name", data.Name);
+    console.log("salammmamm",req);
+    // req.append("Name", data.Name);
+    // for (const image of data.Images) {
+    //   req.append("Images", image);
+    // }
+    // req.append("Images", data.Images);
+    // req.append("Description", data.Description);
+    // data.MaterialIds.forEach((id, index) => {
+    //   req.append(`MaterialIds[${index}]`, id);
+    // });
+    // data.ColorIds.forEach((id, index) => {
+    //   req.append(`ColorIds[${index}]`, id);
+    // });
+    // req.append("Price", data.Price);
+    // req.append("GenderId", data.GenderId);
+    // req.append("CategoryId", data.CategoryId);
+    // req.append("StockKeepingUnit", data.StockKeepingUnit);
+    
+   
     // if (!loading) {
     //   navigate("/products");
     // }
   };
 
-  let options = [];
-
-  materials &&
-    materials.map((color) => {
-      let option = {
-        label: color.name,
-        value: color.id,
-      };
-      options.push(option);
-    });
-  let options2 = [];
 
   
   return (
@@ -188,9 +197,13 @@ const CreateProduct = () => {
                   <input type="text" name="" id="" />
                   <label htmlFor="">Material:</label>
               <select name="material" id="material">
-                <option value="leather">leather</option>
-                <option value="faux">faux</option>
-                <option value="satin">satin</option>
+                {materials&&materials.map((material) => {
+                  return (
+                    <option value={material.id}>
+                      {material.name}
+                    </option>
+                  );
+                })}
               </select> 
                  
                   <ErrorMessage
@@ -206,8 +219,9 @@ const CreateProduct = () => {
                     </select>
                   <label htmlFor="">Men/Women:</label>
                   <select name="gender" id="gender">
-                    <option value="men">men</option>
-                    <option value="women">women</option>
+                  {genders&&genders.map((gender) =>(
+                    <option value={gender.id}>{gender.name}</option>
+                    ))}
                   </select>
                 </div>
               </div>

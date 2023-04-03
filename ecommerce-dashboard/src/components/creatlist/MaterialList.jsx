@@ -7,8 +7,8 @@ import { deleteMaterials, fetchAllMaterials } from '../../features/materials/mat
 const MaterialList = () => {
     const navigate = useNavigate
     const dispatch = useDispatch();
-    const { material } = useSelector(state => state.material)
-    console.log("salam",material);
+    const { materials } = useSelector(state => state.material)
+    console.log("salam",materials);
 
     useEffect(() => {
         dispatch(fetchAllMaterials())
@@ -45,6 +45,7 @@ const MaterialList = () => {
 
     return (
         <div className='container mt-5'>
+            <h1>Material List</h1>
             <table className='table'>
                 <thead>
                     <tr>
@@ -56,14 +57,14 @@ const MaterialList = () => {
                 </thead>
                 <tbody>
                     {
-                        material.map((material) => (
+                        materials&&materials.map((material) => (
                             <tr key={material.id}>
                                 <td>{material.name}</td>
                                 <td>{material.order}</td>
                                 <td>{material.status}</td>
                                 <td>{material.slug}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => deleteHandler()}>Delete</button>
+                                    <button className='btn btn-danger' onClick={() => deleteHandler(material)}>Delete</button>
                                     <Link to={`materialedit/${material.id}`}><button className='btn btn-info' >Edit</button></Link>
                                     
                                 </td>

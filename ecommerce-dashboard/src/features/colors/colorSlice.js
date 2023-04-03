@@ -22,8 +22,6 @@ export const deleteColor = createAsyncThunk("colors/getAPI", async (payload) => 
 });
 
 
-
-
 export const colorSlice = createSlice({
   name: "colors",
   initialState: initialState,

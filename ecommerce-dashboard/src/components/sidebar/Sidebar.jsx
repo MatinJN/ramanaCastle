@@ -12,6 +12,7 @@ const Sidebar = () => {
         try {
             localStorage.removeItem('userInfo')
             window.location.reload(false)
+            navigate('')
         } catch (e) {
             alert("couldnt")
         }
@@ -57,9 +58,9 @@ const Sidebar = () => {
                     <div className="sidebar__menu__item__icon">
                         <i className='bx bx-log-out'></i>
                     </div>
-                    <div onClick={() => logoutHandler()} className="sidebar__menu__item__txt">
+                    <Link to={'/'}> <div onClick={() => logoutHandler()} className="sidebar__menu__item__txt">
                         Logout
-                    </div>
+                    </div></Link>
                 </div>
             </div>
         </div>

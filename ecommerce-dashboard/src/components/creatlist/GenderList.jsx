@@ -6,9 +6,9 @@ import { deleteGender, fetchAllGenders } from '../../features/genders/genderSlic
 const GenderList = () => {
     const navigate = useNavigate
     const dispatch = useDispatch();
-    const { gender } = useSelector(state => state.gender)
+    const { genders } = useSelector(state => state.gender)
     
-    console.log("genderxzx",gender.translations);
+    console.log("genderxzx",genders);
 
     useEffect(() => {
         dispatch(fetchAllGenders())
@@ -20,7 +20,7 @@ const GenderList = () => {
             setTimeout(() => {
                 window.location.reload(false);
                 toast.success("Color Deleted")
-            }, 300)
+            }, 400)
         } catch (error) {
             toast.error("yeniden ceht edin")
         }
@@ -57,7 +57,7 @@ const GenderList = () => {
                 </thead>
                 <tbody>
                     {
-                        gender.map((gender) => (
+                        genders.map((gender) => (
                             <tr key={gender.id}>
                                 <td>{gender.name}</td>
                                 <td>{gender.slug}</td>

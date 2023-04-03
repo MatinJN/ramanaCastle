@@ -35,12 +35,12 @@ const SizeList = () => {
         {
             name: 'Status'
         },
-
     ]
 
 
     return (
         <div className='container mt-5'>
+            Size List
             <table className='table'>
                 <thead>
                     <tr>

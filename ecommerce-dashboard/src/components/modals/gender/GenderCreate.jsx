@@ -5,12 +5,19 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { saveNewGender } from '../../../features/genders/genderSlice';
+import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 ;
 const GenderCreate = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  
+  const [switchValue, setSwitchValue] = useState(0);
+
+  const handleSwitchChange = (event) => {
+    const value = event.target.checked ? 1 : 0;
+    setSwitchValue(value);
+    console.log(value);
+  };
 
   const [inputData, setInputData] = useState({
     "name:az": '',
@@ -70,13 +77,12 @@ const GenderCreate = () => {
           <Form.Label>Gender Slug</Form.Label>
           <Form.Control type="text" placeholder="Enter slug" onChange={e => setInputData({ ...inputData, slug: e.target.value })} />
         </Form.Group>
+        <FormGroup>
+        <FormControlLabel control={<Switch checked={switchValue === 1} onChange={handleSwitchChange} />} label="Status" />
+        </FormGroup>
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Gender Order</Form.Label>
           <Form.Control type="text" placeholder="Enter Gender Order" onChange={e => setInputData({ ...inputData, order: e.target.value })} />
-        </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Gender Status</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Status" onChange={e => setInputData({ ...inputData, status: e.target.value })} />
         </Form.Group>
         <Button variant="contained" type='submit'>SEND</Button>
       </Form>

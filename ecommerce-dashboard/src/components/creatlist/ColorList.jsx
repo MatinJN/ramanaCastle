@@ -43,6 +43,7 @@ const ColorList = () => {
 
     return (
         <div className='container mt-5'>
+            <h1>Color List</h1>
             <table className='table'>
                 <thead>
                     <tr>
