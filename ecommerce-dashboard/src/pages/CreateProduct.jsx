@@ -19,6 +19,7 @@ import { fetchAllColors } from "../features/colors/colorSlice";
 import { saveNewProduct } from "../features/products/productSlice";
 
 import * as yup from "yup";
+import { fetchAllsize } from "../features/size/sizeSlice";
 const CreateProduct = () => {
   const navigate = useNavigate();
   const validScheme = yup.object().shape({
@@ -39,19 +40,21 @@ const CreateProduct = () => {
   });
 
   let dispatch = useDispatch();
-//   const loading = useSelector(getLoading);
-const { catergorys } = useSelector(state => state.category)
+  //   const loading = useSelector(getLoading);
+  const { catergorys } = useSelector(state => state.category)
   const { colors } = useSelector(state => state.color)
-  const {genders} = useSelector(state => state.gender);
-  const {materials} = useSelector(state => state.material);
+  const { genders } = useSelector(state => state.gender);
+  const { materials } = useSelector(state => state.material);
+  const { sizes } = useSelector(state => state.size);
   console.log(materials);
-  
+
 
   useEffect(() => {
     dispatch(fetchAllCategories());
     dispatch(fetchAllMaterials());
     dispatch(fetchAllColors());
     dispatch(fetchAllGenders());
+    dispatch(fetchAllsize());
   }, [dispatch]);
 
   const req = new FormData()
@@ -74,7 +77,7 @@ const { catergorys } = useSelector(state => state.category)
     req.append("Color", data.Color);
     req.append("Material", data.Material);
     req.append("Name", data.Name);
-    console.log("salammmamm",req);
+    console.log("salammmamm", req);
     // req.append("Name", data.Name);
     // for (const image of data.Images) {
     //   req.append("Images", image);
@@ -91,15 +94,15 @@ const { catergorys } = useSelector(state => state.category)
     // req.append("GenderId", data.GenderId);
     // req.append("CategoryId", data.CategoryId);
     // req.append("StockKeepingUnit", data.StockKeepingUnit);
-    
-   
+
+
     // if (!loading) {
     //   navigate("/products");
     // }
   };
 
 
-  
+
   return (
     <Formik
       validationSchema={validScheme}
@@ -178,11 +181,14 @@ const { catergorys } = useSelector(state => state.category)
                   <label htmlFor="">Number:</label>
                   <input type="text" name="" id="" />
                   <label htmlFor="">Size:</label>
-                  <select name="size" id="size">
-                    <option value="35">35</option>
-                    <option value="36">36</option>
-                    <option value="37">37</option>
-                    <option value="38">38</option>
+                  <select name="material" id="material">
+                    {sizes && sizes.map((size) => {
+                      return (
+                        <option value={size.id}>
+                          {size.size}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 <div className="productDetails__add__row__right col-6">
@@ -196,16 +202,16 @@ const { catergorys } = useSelector(state => state.category)
                   <label htmlFor="">Price:</label>
                   <input type="text" name="" id="" />
                   <label htmlFor="">Material:</label>
-              <select name="material" id="material">
-                {materials&&materials.map((material) => {
-                  return (
-                    <option value={material.id}>
-                      {material.name}
-                    </option>
-                  );
-                })}
-              </select> 
-                 
+                  <select name="material" id="material">
+                    {materials && materials.map((material) => {
+                      return (
+                        <option value={material.id}>
+                          {material.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+
                   <ErrorMessage
                     name="MaterialIds"
                     component="div"
@@ -213,14 +219,14 @@ const { catergorys } = useSelector(state => state.category)
                   />
                   <label htmlFor="">Color:</label>
                   <select name="color" id="color">
-                  {colors&&colors.map((color) =>(
-                    <option value={color.id}>{color.name}</option>
+                    {colors && colors.map((color) => (
+                      <option value={color.id}>{color.name}</option>
                     ))}
-                    </select>
+                  </select>
                   <label htmlFor="">Men/Women:</label>
                   <select name="gender" id="gender">
-                  {genders&&genders.map((gender) =>(
-                    <option value={gender.id}>{gender.name}</option>
+                    {genders && genders.map((gender) => (
+                      <option value={gender.id}>{gender.name}</option>
                     ))}
                   </select>
                 </div>

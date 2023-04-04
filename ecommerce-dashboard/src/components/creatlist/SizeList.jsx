@@ -5,25 +5,13 @@ import { toast } from 'react-toastify';
 import { deleteSize, fetchAllsize } from '../../features/size/sizeSlice';
 
 const SizeList = () => {
-    const navigate = useNavigate
     const dispatch = useDispatch();
-    const { size } = useSelector(state => state.size)
+    const { sizes } = useSelector(state => state.size)
 
     useEffect(() => {
         dispatch(fetchAllsize())
     }, [])
 
-    const deleteHandler = ({ id }) => {
-        try {
-            dispatch(deleteSize(id))
-            setTimeout(() => {
-                window.location.reload(false);
-                toast.success("Color Deleted")
-            }, 300)
-        } catch (error) {
-            toast.error("yeniden ceht edin")
-        }
-    }
 
     const colums = [
         {
@@ -52,23 +40,21 @@ const SizeList = () => {
                 </thead>
                 <tbody>
                     {
-                        size.map((size) => (
+                        sizes&&sizes.map((size) => (
                             <tr key={size.id}>
                                 <td>{size.size}</td>
                                 <td>{size.order}</td>
                                 <td>{size.status}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => deleteHandler()}>Delete</button>
+                                    <button className='btn btn-danger' onClick={() => {dispatch(deleteSize(size.id).then(() =>{dispatch(fetchAllsize())}))}}>Delete</button>
                                     <Link to={`sizeedit/${size.id}`}><button className='btn btn-info' >Edit</button></Link>
                                     
                                 </td>
                             </tr>
                         ))
-
                     }
                 </tbody>
             </table>
-
         </div>
     )
 }

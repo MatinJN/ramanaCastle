@@ -9,7 +9,6 @@ const initialState = {
 
 export const fetchAllMaterials = createAsyncThunk("materials/getAPI", async () => {
     const response = await axios.get("http://irp.ramanacastle.com/api/material");
-
     return response.data.data;
 });
 export const createMaterials = createAsyncThunk("materials/postAPI", async (payload) => {
@@ -20,14 +19,12 @@ export const createMaterials = createAsyncThunk("materials/postAPI", async (payl
 
 export const updateMaterials = createAsyncThunk("materials/putAPI", async (payload) => {
     const response = await axios.post(`http://irp.ramanacastle.com/api/material/update/${payload}`);
-
     return response.data.data;
 });
 
 
 export const deleteMaterials = createAsyncThunk("materials/putAPI", async (payload) => {
     const response = await axios.delete(`http://irp.ramanacastle.com/api/delete/material/${payload}`);
-
     return response.data.data;
 });
 export const materialSlice = createSlice({

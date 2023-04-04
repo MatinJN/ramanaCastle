@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    size: [],
+    sizes: [],
     loading: false
 }
 
@@ -32,7 +32,7 @@ export const sizeSlice = createSlice({
     },
     extraReducers: (builder)=>{
         builder.addCase(fetchAllsize.fulfilled, (state, action) => {
-            state.size = action.payload
+            state.sizes = action.payload
         })
     }
 })

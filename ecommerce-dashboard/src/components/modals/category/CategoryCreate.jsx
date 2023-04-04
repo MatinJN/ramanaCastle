@@ -2,12 +2,15 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createColor } from '../../../features/colors/colorSlice';
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllGenders } from '../../../features/genders/genderSlice';
 
 const CategoryCreate = () => {
     const dispatch = useDispatch();
+    const { genders } = useSelector(state => state.gender)
+    React.useEffect(() => {
+        dispatch(fetchAllGenders())
+    }, [])
 
     const [data, setData] = useState()
 
@@ -22,20 +25,20 @@ const CategoryCreate = () => {
         for (let i = 0; i < data.length; i++) {
             formdata.append(`image[${i}]`, data[0])
         }
-        formdata.append('name:az',data.value)
-        formdata.append('title:az',data.value)
-        formdata.append('keywords:az',data.value)
-        formdata.append('description:az',data.value)
-        formdata.append('name:en',data.value)
-        formdata.append('title:en',data.value)
-        formdata.append('keywords:en',data.value)
-        formdata.append('description:en',data.value)
-        formdata.append('slug:az',data.value)
-        formdata.append('order:az',data.value)
-        formdata.append('status:az',data.value)
-        formdata.append('keywords:az',data.value)
-        formdata.append('keywords:az',data.value)
-        
+        formdata.append('name:az', data.value)
+        formdata.append('title:az', data.value)
+        formdata.append('keywords:az', data.value)
+        formdata.append('description:az', data.value)
+        formdata.append('name:en', data.value)
+        formdata.append('title:en', data.value)
+        formdata.append('keywords:en', data.value)
+        formdata.append('description:en', data.value)
+        formdata.append('slug:az', data.value)
+        formdata.append('order:az', data.value)
+        formdata.append('status:az', data.value)
+        formdata.append('keywords:az', data.value)
+        formdata.append('keywords:az', data.value)
+        console.log(data);
     }
     return (
         <div>
@@ -81,17 +84,23 @@ const CategoryCreate = () => {
                     <Form.Label>Gender Order</Form.Label>
                     <Form.Control type="text" placeholder="Enter Gender Order" onChange={e => setData({ ...data, order: e.target.value })} />
                 </Form.Group>
+                <Form.Check
+                    type="switch"
+                    id="custom-switch"
+                    label="Check this switch"
+                    onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
+                />
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Gender Status</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Gender Status" onChange={e => setData({ ...data, status: e.target.value })} />
+                    <Form.Label>Gender Select</Form.Label>
+                    <Form.Select multi-select aria-label="Default select example">
+                        <option>Open this select menu</option>
+                        {genders && genders.map((gender) => (
+                            <option value={gender.id}>{gender.name}</option>
+                        ))}
+                    </Form.Select>
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Gender Status</Form.Label>
-                    <Form.Select type="text" placeholder="Enter Gender Status" onChange={e => setData({ ...data, gender: e.target.value })} />
-                    <Form.option value=""></Form.option>
-                </Form.Group>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Category Status</Form.Label>
+                    <Form.Label>Category Image</Form.Label>
                     <Form.Control type="file" multiple placeholder="Enter Gender Status" onChange={e => setData({ ...data, image: e.target.value })} />
                 </Form.Group>
 

@@ -7,24 +7,11 @@ const GenderList = () => {
     const navigate = useNavigate
     const dispatch = useDispatch();
     const { genders } = useSelector(state => state.gender)
-    
-    console.log("genderxzx",genders);
 
     useEffect(() => {
         dispatch(fetchAllGenders())
     }, [])
 
-    const deleteHandler = ({ id }) => {
-        try {
-            dispatch(deleteGender(id))
-            setTimeout(() => {
-                window.location.reload(false);
-                toast.success("Color Deleted")
-            }, 400)
-        } catch (error) {
-            toast.error("yeniden ceht edin")
-        }
-    }
 
     const colums = [
         {
@@ -64,7 +51,7 @@ const GenderList = () => {
                                 <td>{gender.status}</td>
                                 <td>{gender.order}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() =>deleteHandler(gender) }>Delete</button>
+                                    <button className='btn btn-danger' onClick={() =>{dispatch(deleteGender(gender.id)).then(() => dispatch(fetchAllGenders()))} }>Delete</button>
                                     <Link to={`genderedit/${gender.id}`}><button className='btn btn-info' >Edit</button></Link>
                                 </td>
                             </tr>

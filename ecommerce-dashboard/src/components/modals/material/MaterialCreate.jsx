@@ -5,53 +5,61 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { createMaterials } from '../../../features/materials/materialSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MaterialCreate = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate()
-  
-    
-  
-    const [inputData, setInputData] = useState({
-      "name:az": '',
-      "name:en": '',
-      slug: '',
-      status: '',
-      order: '',
-    }
-    )
-    function handleSubmit(event) {
-      event.preventDefault();
-      dispatch(createMaterials(inputData))
-      console.log(inputData);
-    }
-    return (
-      <div>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Material Name az</Form.Label>
-            <Form.Control type="text" placeholder="Enter Material Name" onChange={e => setInputData({ ...inputData, 'name:az': e.target.value })} />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Material Name en</Form.Label>
-            <Form.Control type="text" placeholder="Enter Material Name" onChange={e => setInputData({ ...inputData, "name:en": e.target.value })} />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Material Code</Form.Label>
-            <Form.Control type="text" placeholder="slug" onChange={e => setInputData({ ...inputData, slug: e.target.value })} />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Material Order</Form.Label>
-            <Form.Control type="text" placeholder="Enter Material Order" onChange={e => setInputData({ ...inputData, order: e.target.value })} />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Material Status</Form.Label>
-            <Form.Control type="text" placeholder="Enter Material Status" onChange={e => setInputData({ ...inputData, status: e.target.value })} />
-          </Form.Group>
-          <Button variant="contained" type='submit'>SEND</Button>
-        </Form>
-      </div>
-    );
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+
+
+  const [data, setData] = useState()
+
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formdata = new FormData()
+    formdata.append('name:az', data.value)
+    formdata.append('name:en', data.value)
+    formdata.append('slug', data.value)
+    formdata.append('order', data.value)
+    formdata.append('status', data.value)
+    dispatch(createMaterials(data))
+    toast("Material saved successfully")
+  }
+  return (
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Material Name az</Form.Label>
+          <Form.Control type="text" placeholder="Enter Material Name" onChange={e => setData({ ...data, 'name:az': e.target.value })} />
+        </Form.Group>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Material Name en</Form.Label>
+          <Form.Control type="text" placeholder="Enter Material Name" onChange={e => setData({ ...data, "name:en": e.target.value })} />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Material Code</Form.Label>
+          <Form.Control type="text" placeholder="slug" onChange={e => setData({ ...data, slug: e.target.value })} />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Material Order</Form.Label>
+          <Form.Control type="text" placeholder="Enter Material Order" onChange={e => setData({ ...data, order: e.target.value })} />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Material Status</Form.Label>
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
+          />
+        </Form.Group>
+        <Button variant="contained" type='submit'>SEND</Button>
+        <ToastContainer />
+      </Form>
+    </div>
+  );
 }
 
 export default MaterialCreate

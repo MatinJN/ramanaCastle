@@ -3,44 +3,50 @@ import Button from '@mui/material/Button';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
 import { saveNewSize } from '../../../features/size/sizeSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const SizeCreate = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate()
-  
+  const dispatch = useDispatch();
+
+
+
+  const [data, setData] = useState()
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formdata = new FormData()
+    formdata.append('size', data.value)
+    formdata.append('order', data.value)
+    formdata.append('status', data.value)
+    dispatch(saveNewSize(formdata))
+    toast.success('Size Created Successfully')
     
-  
-    const [inputData, setInputData] = useState({
-      size: '',
-      status: '',
-      order: '',
-    }
-    )
-    function handleSubmit(event) {
-      event.preventDefault();
-      dispatch(saveNewSize(inputData))
-      console.log(inputData);
-    }
-    return (
-      <div>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Size</Form.Label>
-            <Form.Control type="text" placeholder="Size" onChange={e => setInputData({ ...inputData, size: e.target.value })} />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Size Order</Form.Label>
-            <Form.Control type="text" placeholder="Enter Color Order" onChange={e => setInputData({ ...inputData, order: e.target.value })} />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Size Status</Form.Label>
-            <Form.Control type="text" placeholder="Enter Color Status" onChange={e => setInputData({ ...inputData, status: e.target.value })} />
-          </Form.Group>
-          <Button variant="contained" type='submit'>SEND</Button>
-        </Form>
-      </div>
-    );
+  }
+  return (
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Size</Form.Label>
+          <Form.Control type="text" placeholder="Size" onChange={e => setData({ ...data, size: e.target.value })} />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Size Order</Form.Label>
+          <Form.Control type="text" placeholder="Enter Color Order" onChange={e => setData({ ...data, order: e.target.value })} />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Size Status</Form.Label>
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="Check this switch"
+            onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
+          />
+        </Form.Group>
+        <Button variant="contained" type='submit'>SEND</Button>
+        <ToastContainer />
+      </Form>
+    </div>
+  );
 }
 
 export default SizeCreate

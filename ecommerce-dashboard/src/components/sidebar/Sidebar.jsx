@@ -12,7 +12,7 @@ const Sidebar = () => {
         try {
             localStorage.removeItem('userInfo')
             window.location.reload(false)
-            navigate('')
+            window.location.href = '/'
         } catch (e) {
             alert("couldnt")
         }
