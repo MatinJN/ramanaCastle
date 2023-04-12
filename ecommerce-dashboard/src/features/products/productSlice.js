@@ -21,10 +21,10 @@ export const saveNewProduct = createAsyncThunk(
   "products/getApi",
   async (payload) => {
     const response = await axios.post(
-      "http://localhost:3000/advocates",
+      "http://irp.ramanacastle.com/api/product/store",
       payload
     );
-    return response.data;
+    return response.data.data;
   }
 );
 export const deleteProduct = createAsyncThunk(

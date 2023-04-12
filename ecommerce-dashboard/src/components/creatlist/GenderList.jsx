@@ -1,10 +1,8 @@
 import {React, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import { deleteGender, fetchAllGenders } from '../../features/genders/genderSlice';
 const GenderList = () => {
-    const navigate = useNavigate
     const dispatch = useDispatch();
     const { genders } = useSelector(state => state.gender)
 
@@ -51,7 +49,7 @@ const GenderList = () => {
                                 <td>{gender.status}</td>
                                 <td>{gender.order}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() =>{dispatch(deleteGender(gender.id)).then(() => dispatch(fetchAllGenders()))} }>Delete</button>
+                                    <button className='btn btn-danger' onClick={() =>{dispatch(deleteGender(gender.id)).then(() => dispatch(fetchAllGenders()))}}>Delete</button>
                                     <Link to={`genderedit/${gender.id}`}><button className='btn btn-info' >Edit</button></Link>
                                 </td>
                             </tr>

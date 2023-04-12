@@ -9,8 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const SizeCreate = () => {
   const dispatch = useDispatch();
 
-
-
   const [data, setData] = useState()
   function handleSubmit(event) {
     event.preventDefault();

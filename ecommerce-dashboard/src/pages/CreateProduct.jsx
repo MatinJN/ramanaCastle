@@ -1,52 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../scss/productdetails.scss";
+import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
-import Select from "react-select";
-import prodImg from "../assets/images/avt.jpg";
-
-import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAllCategories,
-} from "../features/categories/categorySlice";
-import {
-  fetchAllMaterials
-} from "../features/materials/materialSlice";
-import {
-  fetchAllGenders,
-} from "../features/genders/genderSlice";
+import { fetchAllCategories } from "../features/categories/categorySlice";
+import { fetchAllMaterials } from "../features/materials/materialSlice";
+import { fetchAllGenders } from "../features/genders/genderSlice";
 import { fetchAllColors } from "../features/colors/colorSlice";
 import { saveNewProduct } from "../features/products/productSlice";
-
-import * as yup from "yup";
 import { fetchAllsize } from "../features/size/sizeSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Form } from "react-bootstrap";
+import { useFormik } from "formik";
 const CreateProduct = () => {
-  const navigate = useNavigate();
-  const validScheme = yup.object().shape({
-    Name: yup.string().required("Name is required"),
-    Images: yup.mixed().required("Image is required"),
-    Description: yup
-      .string()
-      .min(10, "Description must be at least 10 characters long")
-      .required("Description is required"),
-    Price: yup
-      .number()
-      .positive("Price must be a positive number")
-      .required("Price is required"),
-    StockKeepingUnit: yup
-      .number()
-      .integer("Stock must be an integer")
-      .required("Stock is required"),
-  });
 
   let dispatch = useDispatch();
-  //   const loading = useSelector(getLoading);
-  const { catergorys } = useSelector(state => state.category)
+  const { categories } = useSelector(state => state.category)
   const { colors } = useSelector(state => state.color)
   const { genders } = useSelector(state => state.gender);
   const { materials } = useSelector(state => state.material);
   const { sizes } = useSelector(state => state.size);
-  console.log(materials);
+
 
 
   useEffect(() => {
@@ -57,189 +32,238 @@ const CreateProduct = () => {
     dispatch(fetchAllsize());
   }, [dispatch]);
 
-  const req = new FormData()
-
-  const submitHandler = (data) => {
-    console.log(data);
-    req.append("Images", data.Images);
-    req.append("Description", data.Description);
-    req.append("Price", data.Price);
-    req.append("StockKeepingUnit", data.StockKeepingUnit);
-    req.append("Category", data.Category);
-    req.append("Gender", data.Gender);
-    req.append("Color", data.Color);
-    req.append("Material", data.Material);
-    req.append("Name", data.Name);
-    req.append("Price", data.Price);
-    req.append("StockKeepingUnit", data.StockKeepingUnit);
-    req.append("Category", data.Category);
-    req.append("Gender", data.Gender);
-    req.append("Color", data.Color);
-    req.append("Material", data.Material);
-    req.append("Name", data.Name);
-    console.log("salammmamm", req);
-    // req.append("Name", data.Name);
-    // for (const image of data.Images) {
-    //   req.append("Images", image);
-    // }
-    // req.append("Images", data.Images);
-    // req.append("Description", data.Description);
-    // data.MaterialIds.forEach((id, index) => {
-    //   req.append(`MaterialIds[${index}]`, id);
-    // });
-    // data.ColorIds.forEach((id, index) => {
-    //   req.append(`ColorIds[${index}]`, id);
-    // });
-    // req.append("Price", data.Price);
-    // req.append("GenderId", data.GenderId);
-    // req.append("CategoryId", data.CategoryId);
-    // req.append("StockKeepingUnit", data.StockKeepingUnit);
+  const [data, setData] = useState()
 
 
-    // if (!loading) {
-    //   navigate("/products");
-    // }
-  };
+  const formik = useFormik({
+    initialValues: {
+
+
+      'name:en': "",
+      'name:az': "",
+      'title:az': "",
+      'title:en': "",
+      'description:az': "",
+      'description:en': "",
+      'keywords:en': "",
+      'keywords:az': "",
+      'quantity': "",
+      'slug': "",
+      'price': "",
+      'discount_price': "",
+      'status': "",
+      'order': "",
+      'stock': "",
+      'image': "",
+      'size': "",
+      'categories': "",
+      'materials': "",
+      'colors[color_id][]': "",
+      'genders': "",
+      'colors[stock][]': "",
+      'colors[code][]': "",
+      'color_image[][]': ""
+
+
+
+    },
+
+    onSubmit: (values) => {
+
+      console.log(values);
+      try {
+        var req = new FormData();
+
+        req.append("name:en", values.title);
+        req.append("name:az", values.title);
+        req.append("title:az", values.title);
+        req.append("title:en", values.title);
+        req.append("description:az", values.title);
+        req.append("description:en", values.title);
+        req.append("keywords:en", values.title);
+        req.append("keywords:az", values.title);
+        req.append("quantity", values.title);
+        req.append("slug", values.title);
+        req.append("price", values.title);
+        req.append("discount_price", values.title);
+        req.append("status", values.title);
+        req.append("order", values.title);
+        req.append("stock", values.title);
+        req.append("image", values.title);
+        req.append("size", values.title);
+        req.append("categories", values.title);
+        req.append("materials", values.title);
+        req.append("colors[color_id][]", values.title);
+        req.append("genders", values.title);
+        req.append("colors[stock][]", values.title);
+        req.append("colors[code][]", values.title);
+        req.append("color_image[][]", values.title);
+        dispatch(saveNewProduct(req))
+      } catch (error) {
+        toast.error(error.response.data.Detail);
+      }
+    },
+  });
+
+
+  // function handleSubmit(event) {
+  //   const formdata = new FormData()
+  //   formdata.append('name:az', data.value)
+  //   formdata.append('title:az', data.value)
+  //   formdata.append('keywords:az', data.value)
+  //   formdata.append('description:az', data.value)
+  //   formdata.append('name:en', data.value)
+  //   formdata.append('title:en', data.value)
+  //   formdata.append('keywords:en', data.value)
+  //   formdata.append('description:en', data.value)
+  //   formdata.append('slug', data.value)
+  //   formdata.append('order', data.value)
+  //   formdata.append('status', data.value)
+  // }
+
 
 
 
   return (
-    <Formik
-      validationSchema={validScheme}
-      initialValues={{
-        Name: "",
-        Description: "",
-        StockKeepingUnit: "",
-        ColorIds: [],
-        GenderId: "",
-        MaterialIds: [],
-        Price: "",
-        Images: [],
-      }}
-      onSubmit={submitHandler}
-    >
-      {({ touched, errors, setFieldValue }) => (
-        <Form className="form">
-          <div className="productDetails">
-            <div className="productDetails__images">
-              <div className="productDetails__images__image">
-                <img src={prodImg} alt="" />
-              </div>
-              <div className="productDetails__images__image">
-                <img src={prodImg} alt="" />
-              </div>
-              <div className="productDetails__images__image">
-                <img src={prodImg} alt="" />
-              </div>
-              <div className="productDetails__images__image">
-                <img src={prodImg} alt="" />
-              </div>
-              <div className="productDetails__images__image">
-                <img src={prodImg} alt="" />
-              </div>
-            </div>
-            <div className="productDetails__input">
-              <input
-                className="productDetails__input__inp"
-                type="file"
-                name=""
-                id=""
-              />
-            </div>
-            <div className="productDetails__add">
-              <h1>add product</h1>
-              <div className="productDetails__add__row row">
-                <div className="productDetails__add__row__left col-6">
-                  <label className="title__h is-invalid" htmlFor="Name">
-                    Name
-                  </label>
-                  <ErrorMessage
-                    name="Name"
-                    component="div"
-                    className="invalid-feedback"
-                  />
-                  <Field
-                    name="Name"
-                    placeholder="Name"
-                    className="select__inp "
-                  />
+    <div>
+      <h1>Product Add</h1>
+      <Form onSubmit={formik.handleSubmit}>
 
-                  <label htmlFor="">Desc:</label>
-                  <ErrorMessage
-                    name="Description"
-                    component="div"
-                    className="invalid-feedback"
-                  />
-                  <Field
-                    name="Description"
-                    placeholder="Description"
-                    className="edit_inputs"
-                  />
+        <Form.Group controlId="name:en">
+          <Form.Label>Gender Name en</Form.Label>
+          <Form.Control type="text" placeholder="Enter Color Name" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="name:az">
+          <Form.Label>Gender name az</Form.Label>
+          <Form.Control type="text" placeholder="Enter Color Name" onChange={formik.handleChange} />
+        </Form.Group>
 
-                  <label htmlFor="">Keywords:</label>
-                  <input type="text" name="" id="" />
-                  <label htmlFor="">Number:</label>
-                  <input type="text" name="" id="" />
-                  <label htmlFor="">Size:</label>
-                  <select name="material" id="material">
-                    {sizes && sizes.map((size) => {
-                      return (
-                        <option value={size.id}>
-                          {size.size}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <div className="productDetails__add__row__right col-6">
-                  <label htmlFor="">Category:</label>
-                  <select name="category" id="category">
-                    <option value="footwear">footwear</option>
-                    <option value="shirt">shirt</option>
-                    <option value="pants">pants</option>
-                    <option value="caps">caps</option>
-                  </select>
-                  <label htmlFor="">Price:</label>
-                  <input type="text" name="" id="" />
-                  <label htmlFor="">Material:</label>
-                  <select name="material" id="material">
-                    {materials && materials.map((material) => {
-                      return (
-                        <option value={material.id}>
-                          {material.name}
-                        </option>
-                      );
-                    })}
-                  </select>
 
-                  <ErrorMessage
-                    name="MaterialIds"
-                    component="div"
-                    className="invalid-feedback"
-                  />
-                  <label htmlFor="">Color:</label>
-                  <select name="color" id="color">
-                    {colors && colors.map((color) => (
-                      <option value={color.id}>{color.name}</option>
-                    ))}
-                  </select>
-                  <label htmlFor="">Men/Women:</label>
-                  <select name="gender" id="gender">
-                    {genders && genders.map((gender) => (
-                      <option value={gender.id}>{gender.name}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="button">
-              <button type="submit">save</button>
-            </div>
-          </div>
-        </Form>
-      )}
-    </Formik>
-  );
+
+        <Form.Group controlId="title:az">
+          <Form.Label>Gender Keywords az</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Name" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="title:en">
+          <Form.Label>Gender Description az</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Name" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="description:az">
+          <Form.Label>Gender Name en</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Name" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="description:en">
+          <Form.Label>Gender Title en</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Name" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="keywords:en">
+          <Form.Label>Gender Keywords en</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Name" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="keywords:az">
+          <Form.Label>Gender Description en</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Name" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="quantity">
+          <Form.Label>quantity quantity</Form.Label>
+          <Form.Control type="text" placeholder="Enter slug" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="slug">
+          <Form.Label>Gender slug</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="price">
+          <Form.Label>Product price</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="discount_price">
+          <Form.Label>Product discount_price</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="status">
+          <Form.Label>Product status status</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="order">
+          <Form.Label>Product order order</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+
+        <Form.Group controlId="sizes">
+          <Form.Label>SELECT SIZES SELECT SIZES</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="categories">
+          <Form.Label>SELECT SIZES SELECT SIZES</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="materials">
+          <Form.Label>SELECT materials SELECT materials</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="colors[color_id][]">
+          <Form.Label>SELECT colors SELECT colors</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="genders">
+          <Form.Label>SELECT genders SELECT genders</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="colors[stock][]">
+          <Form.Label>SELECT genders SELECT genders</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="colors[code][]">
+          <Form.Label>SELECT genders SELECT genders</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="color_image[][]">
+          <Form.Label>SELECT genders SELECT genders</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+
+
+
+
+
+        <Form.Group controlId="stock">
+          <Form.Label>Stock</Form.Label>
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="Check this switch"
+            onChange={formik.handleChange}
+          // onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
+          />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Product Status</Form.Label>
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="Check this switch"
+            // onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
+            onChange={formik.handleChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="image">
+
+          <Form.Control
+            type="file"
+            multiple
+            // onChange={e => setData({ ...data, image: e.target.value })}
+            onChange={(e) => {
+              formik.setFieldValue("imageFile", e.currentTarget.files[0]);
+            }}
+          >
+
+          </Form.Control>
+        </Form.Group>
+
+        <Button variant="contained" type='submit'>SEND</Button>
+        <ToastContainer />
+      </Form>
+    </div>);
 };
 
 export default CreateProduct;

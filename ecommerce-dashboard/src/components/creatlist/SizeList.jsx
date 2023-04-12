@@ -46,7 +46,7 @@ const SizeList = () => {
                                 <td>{size.order}</td>
                                 <td>{size.status}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => {dispatch(deleteSize(size.id).then(() =>{dispatch(fetchAllsize())}))}}>Delete</button>
+                                    <button className='btn btn-danger'  onClick={() => {dispatch(deleteSize(size.id)).then(() => dispatch(fetchAllsize()))}}>Delete</button>
                                     <Link to={`sizeedit/${size.id}`}><button className='btn btn-info' >Edit</button></Link>
                                     
                                 </td>

@@ -6,10 +6,7 @@ const initialState = {
   loading: false,
 };
 
-export const fetchAllCategories = createAsyncThunk(
-  "categories/getAPI",
-  async () => {
-    const response = await axios.get(
+export const fetchAllCategories = createAsyncThunk("categories/getAPI",async () => {const response = await axios.get(
       "http://irp.ramanacastle.com/api/categroy"
     );
 
@@ -17,28 +14,25 @@ export const fetchAllCategories = createAsyncThunk(
   }
 );
 
-export const saveNewCategory = createAsyncThunk(
-  "categories/postApi",
-  async (payload) => {
+export const saveNewCategory = createAsyncThunk("categories/postApi",async (payload) => {
     const response = await axios.post(
-      "http://irp.ramanacastle.com/api/categroy/store",
-      payload
-    );
-    return response.data;
+      "http://irp.ramanacastle.com/api/categroy/store",payload);
+    return response.data.data;
   }
 );
 
 export const updateCategory = createAsyncThunk(
   "categories/putApi",
-  async (payload) => {const response = await axios.post(`http://irp.ramanacastle.com/api/categroy/update/${payload}`);
-    return response.data;
+  async (payload) => {
+    const response = await axios.post(`http://irp.ramanacastle.com/api/categroy/update/${payload}`);
+    return response.data.data;
   }
 );
 
 export const deleteCategory = createAsyncThunk(
   "categories/deleteApi",
   async (payload) => {
-    const response = await axios.post(`http://irp.ramanacastle.com/api/categroy/update/${payload}`);
+    const response = await axios.delete(`http://irp.ramanacastle.com/api/delete/categroy/${payload}`);
     return response.data;
   }
 );
@@ -48,23 +42,11 @@ export const categorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllCategories.pending, (state, action) => {
-        state.categories = action.payload;
-        state.loading = true;
-      })
+
       .addCase(fetchAllCategories.fulfilled, (state, action) => {
-        state.loading = false;
         state.categories = action.payload;
       })
-      .addCase(fetchAllCategories.rejected, (state, action) => {
-        // state.loading = false
-      })
-      .addCase(saveNewCategory.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(saveNewCategory.fulfilled, (state) => {
-        state.loading = false;
-      });
+
   },
 });
 

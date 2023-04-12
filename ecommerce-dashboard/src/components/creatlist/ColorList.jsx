@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { deleteColor, fetchAllColors } from '../../features/colors/colorSlice';
 const ColorList = () => {
 
@@ -8,7 +8,7 @@ const ColorList = () => {
     const { colors } = useSelector(state => state.color)
     useEffect(() => {
         dispatch(fetchAllColors())
-    }, [])
+    }, [dispatch])
 
     const colums = [
         {
@@ -48,17 +48,15 @@ const ColorList = () => {
                                 <td>{color.color_code}</td>
                                 <td>{color.status}</td>
                                 <td>
-                                    <button className='btn btn-danger' onClick={() => {dispatch(deleteColor(color.id).then(() => {dispatch(fetchAllColors())}))}}>Delete</button>
+                                    <button className='btn btn-danger' onClick={() => { dispatch(deleteColor(color.id)).then(() => dispatch(fetchAllColors())) }}>Delete</button>
                                     <Link to={`coloredit/${color.id}`}><button className='btn btn-info' >Edit</button></Link>
 
                                 </td>
                             </tr>
                         ))
-
                     }
                 </tbody>
             </table>
-
         </div>
     )
 }

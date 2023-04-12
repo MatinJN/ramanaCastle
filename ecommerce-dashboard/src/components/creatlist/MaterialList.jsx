@@ -48,16 +48,9 @@ const MaterialList = () => {
                             <td>{material.slug}</td>
                             <td>
                                 <button
-                                    className='btn btn-danger'
-                                    onClick={() => {
-                                        dispatch(deleteMaterials(material.id)).then(() => dispatch(fetchAllMaterials()))
-                                    }}
-                                >
-                                    Delete
-                                </button>
+                                    className='btn btn-danger' onClick={() => {dispatch(deleteMaterials(material.id)).then(() => dispatch(fetchAllMaterials()))}}>Delete</button>
                                 <Link to={`materialedit/${material.id}`}>
-                                    <button className='btn btn-info'>Edit</button>
-                                </Link>
+                                    <button className='btn btn-info'>Edit</button></Link>
                             </td>
                         </tr>
                     ))}

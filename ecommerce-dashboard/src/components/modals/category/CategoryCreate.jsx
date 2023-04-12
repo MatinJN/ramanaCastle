@@ -1,44 +1,64 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllGenders } from '../../../features/genders/genderSlice';
+import { saveNewCategory } from '../../../features/categories/categorySlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import makeAnimated from 'react-select/animated';
+import Select from 'react-select';
 
 const CategoryCreate = () => {
     const dispatch = useDispatch();
     const { genders } = useSelector(state => state.gender)
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(fetchAllGenders())
-    }, [])
+
+    }, [dispatch])
+
+    const animatedComponents = makeAnimated()
 
     const [data, setData] = useState()
+    const [select, setSelect] = useState()
+    const newGenderArray = genders.map(gender => ({
+        label: gender.name,
+        value: gender.name,
+        id: gender.id,
+    }));
+    console.log("ssss", newGenderArray);
 
-    const handleChange = (e) => {
-        setData(e.target.value)
-    }
-
+    const handleChange = (newGenderArray) => {
+        setSelect(newGenderArray);
+    };
 
     function handleSubmit(event) {
         event.preventDefault();
         const formdata = new FormData()
-        for (let i = 0; i < data.length; i++) {
-            formdata.append(`image[${i}]`, data[0])
+        try {
+            formdata.append('image', data.image)
+            formdata.append('name:az', data.value)
+            formdata.append('title:az', data.value)
+            formdata.append('keywords:az', data.value)
+            formdata.append('description:az', data.value)
+            formdata.append('name:en', data.value)
+            formdata.append('title:en', data.value)
+            formdata.append('keywords:en', data.value)
+            formdata.append('description:en', data.value)
+            formdata.append('slug', data.value)
+            formdata.append('order', data.value)
+            formdata.append('status', data.value)
+            console.log(data,select);
+            for (let i = 0; i < select.length; i++) {
+                formdata.append('genders[]', select[i].value);
+            }
+            
+            dispatch(saveNewCategory())
+            toast.success('Category saved successfully')
+        } catch (error) {
+            toast.error(error.message)
         }
-        formdata.append('name:az', data.value)
-        formdata.append('title:az', data.value)
-        formdata.append('keywords:az', data.value)
-        formdata.append('description:az', data.value)
-        formdata.append('name:en', data.value)
-        formdata.append('title:en', data.value)
-        formdata.append('keywords:en', data.value)
-        formdata.append('description:en', data.value)
-        formdata.append('slug:az', data.value)
-        formdata.append('order:az', data.value)
-        formdata.append('status:az', data.value)
-        formdata.append('keywords:az', data.value)
-        formdata.append('keywords:az', data.value)
-        console.log(data);
     }
     return (
         <div>
@@ -90,21 +110,21 @@ const CategoryCreate = () => {
                     label="Check this switch"
                     onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
                 />
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Gender Select</Form.Label>
-                    <Form.Select multi-select aria-label="Default select example">
-                        <option>Open this select menu</option>
-                        {genders && genders.map((gender) => (
-                            <option value={gender.id}>{gender.name}</option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
+                <Select
+                    closeMenuOnSelect={false}
+                    components={animatedComponents}
+                    isMulti
+                    options={newGenderArray}
+                    value={select}
+                    onChange={handleChange}
+                />
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Category Image</Form.Label>
                     <Form.Control type="file" multiple placeholder="Enter Gender Status" onChange={e => setData({ ...data, image: e.target.value })} />
                 </Form.Group>
 
                 <Button variant="contained" type='submit'>SEND</Button>
+                <ToastContainer />
             </Form>
         </div>
     );

@@ -86,13 +86,12 @@ const Orders = () => {
               <TableCell align="left">{order.price}</TableCell>
               <TableCell align="left">
                 <select
-                  className={`default-input text-${
-                    order.status === "pending"
+                  className={`default-input text-${order.status === "pending"
                       ? "primary"
                       : order.status === "completed"
-                      ? "success"
-                      : "danger"
-                  }`}
+                        ? "success"
+                        : "danger"
+                    }`}
                   onChange={(e) => setOrderValue(e.target.value)}
                   // value={order.status}
                   defaultValue={order.status}

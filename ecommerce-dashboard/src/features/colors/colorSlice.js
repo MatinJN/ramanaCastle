@@ -12,10 +12,10 @@ export const fetchAllColors = createAsyncThunk("colors/getAPI", async () => {
   return response.data.data;
 });
 export const createColor = createAsyncThunk("colors/postAPI", async (payload) => {
-  const response = await axios.post("http://irp.ramanacastle.com/api/color/store",payload);
+  const response = await axios.post("http://irp.ramanacastle.com/api/color/store", payload);
   return response.data.data;
 });
-export const deleteColor = createAsyncThunk("colors/getAPI", async (payload) => {
+export const deleteColor = createAsyncThunk("colors/putAPI", async (payload) => {
   const response = await axios.delete(`http://irp.ramanacastle.com/api/delete/color/${payload}`);
 
   return response.data.data;
@@ -29,9 +29,9 @@ export const colorSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchAllColors.fulfilled, (state, action) => {
       state.colors = action.payload
-  })
+    })
   },
-  
+
 });
 
 
