@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "../scss/productdetails.scss";
 import Button from '@mui/material/Button';
@@ -32,7 +33,6 @@ const CreateProduct = () => {
     dispatch(fetchAllsize());
   }, [dispatch]);
 
-  const [data, setData] = useState()
 
 
   const formik = useFormik({
@@ -58,14 +58,8 @@ const CreateProduct = () => {
       'size': "",
       'categories': "",
       'materials': "",
-      'colors[color_id][]': "",
       'genders': "",
-      'colors[stock][]': "",
-      'colors[code][]': "",
-      'color_image[][]': ""
-
-
-
+      'colors': { 'color_id': '', 'color_image': '' },
     },
 
     onSubmit: (values) => {
@@ -93,11 +87,7 @@ const CreateProduct = () => {
         req.append("size", values.title);
         req.append("categories", values.title);
         req.append("materials", values.title);
-        req.append("colors[color_id][]", values.title);
         req.append("genders", values.title);
-        req.append("colors[stock][]", values.title);
-        req.append("colors[code][]", values.title);
-        req.append("color_image[][]", values.title);
         dispatch(saveNewProduct(req))
       } catch (error) {
         toast.error(error.response.data.Detail);
@@ -106,21 +96,6 @@ const CreateProduct = () => {
   });
 
 
-  // function handleSubmit(event) {
-  //   const formdata = new FormData()
-  //   formdata.append('name:az', data.value)
-  //   formdata.append('title:az', data.value)
-  //   formdata.append('keywords:az', data.value)
-  //   formdata.append('description:az', data.value)
-  //   formdata.append('name:en', data.value)
-  //   formdata.append('title:en', data.value)
-  //   formdata.append('keywords:en', data.value)
-  //   formdata.append('description:en', data.value)
-  //   formdata.append('slug', data.value)
-  //   formdata.append('order', data.value)
-  //   formdata.append('status', data.value)
-  // }
-
 
 
 
@@ -128,7 +103,6 @@ const CreateProduct = () => {
     <div>
       <h1>Product Add</h1>
       <Form onSubmit={formik.handleSubmit}>
-
         <Form.Group controlId="name:en">
           <Form.Label>Gender Name en</Form.Label>
           <Form.Control type="text" placeholder="Enter Color Name" onChange={formik.handleChange} />
@@ -137,9 +111,6 @@ const CreateProduct = () => {
           <Form.Label>Gender name az</Form.Label>
           <Form.Control type="text" placeholder="Enter Color Name" onChange={formik.handleChange} />
         </Form.Group>
-
-
-
         <Form.Group controlId="title:az">
           <Form.Label>Gender Keywords az</Form.Label>
           <Form.Control type="text" placeholder="Enter Gender Name" onChange={formik.handleChange} />
@@ -181,73 +152,31 @@ const CreateProduct = () => {
           <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
         </Form.Group>
         <Form.Group controlId="status">
-          <Form.Label>Product status status</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="order">
-          <Form.Label>Product order order</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-
-        <Form.Group controlId="sizes">
-          <Form.Label>SELECT SIZES SELECT SIZES</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="categories">
-          <Form.Label>SELECT SIZES SELECT SIZES</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="materials">
-          <Form.Label>SELECT materials SELECT materials</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="colors[color_id][]">
-          <Form.Label>SELECT colors SELECT colors</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="genders">
-          <Form.Label>SELECT genders SELECT genders</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="colors[stock][]">
-          <Form.Label>SELECT genders SELECT genders</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="colors[code][]">
-          <Form.Label>SELECT genders SELECT genders</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="color_image[][]">
-          <Form.Label>SELECT genders SELECT genders</Form.Label>
-          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
-        </Form.Group>
-
-
-
-
-
-        <Form.Group controlId="stock">
-          <Form.Label>Stock</Form.Label>
+          <Form.Label>Product Status</Form.Label>
           <Form.Check
             type="switch"
-            id="custom-switch"
+            id="status"
             label="Check this switch"
             onChange={formik.handleChange}
           // onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
           />
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Product Status</Form.Label>
+        <Form.Group controlId="order">
+          <Form.Label>Product order</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="stock">
+          <Form.Label>Product Stock </Form.Label>
           <Form.Check
             type="switch"
-            id="custom-switch"
+            id="stock"
             label="Check this switch"
-            // onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
             onChange={formik.handleChange}
+          // onChange={e => setData({ ...data, status: e.target.checked ? '1' : '0' })}
           />
         </Form.Group>
         <Form.Group controlId="image">
-
+          <Form.Label>SELECT Image </Form.Label>
           <Form.Control
             type="file"
             multiple
@@ -255,11 +184,33 @@ const CreateProduct = () => {
             onChange={(e) => {
               formik.setFieldValue("imageFile", e.currentTarget.files[0]);
             }}
-          >
-
-          </Form.Control>
+          />
         </Form.Group>
-
+        <Form.Group controlId="sizes">
+          <Form.Label>Product Size</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="categories">
+          <Form.Label>Product Catergory</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="material">
+          <Form.Label>Product material</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="genders">
+          <Form.Label>Product material</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="colors[color_id]">
+          <Form.Label>Color ID</Form.Label>
+          <Form.Control type="text" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        <Form.Group controlId="colors[color_image]">
+          <Form.Label>Color Image</Form.Label>
+          <Form.Control type="file" placeholder="Enter Gender Order" onChange={formik.handleChange} />
+        </Form.Group>
+        
         <Button variant="contained" type='submit'>SEND</Button>
         <ToastContainer />
       </Form>

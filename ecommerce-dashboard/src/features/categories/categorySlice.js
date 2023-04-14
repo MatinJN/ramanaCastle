@@ -17,6 +17,7 @@ export const fetchAllCategories = createAsyncThunk("categories/getAPI",async () 
 export const saveNewCategory = createAsyncThunk("categories/postApi",async (payload) => {
     const response = await axios.post(
       "http://irp.ramanacastle.com/api/categroy/store",payload);
+      console.log(payload)
     return response.data.data;
   }
 );

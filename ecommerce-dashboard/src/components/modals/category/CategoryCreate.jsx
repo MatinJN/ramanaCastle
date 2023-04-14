@@ -26,12 +26,13 @@ const CategoryCreate = () => {
         label: gender.name,
         value: gender.name,
         id: gender.id,
-    }));
-    console.log("ssss", newGenderArray);
+    }))
+    // console.log(newGenderArray);
 
     const handleChange = (newGenderArray) => {
         setSelect(newGenderArray);
     };
+
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -49,16 +50,23 @@ const CategoryCreate = () => {
             formdata.append('slug', data.value)
             formdata.append('order', data.value)
             formdata.append('status', data.value)
-            console.log(data,select);
+
+            let arr = []
             for (let i = 0; i < select.length; i++) {
-                formdata.append('genders[]', select[i].value);
+                formdata.append('genders', select[i].value);
+                arr.push(select[i].value)
             }
-            
-            dispatch(saveNewCategory())
+
+
+            let newdata = { ...data, 'genders': select.map((elem) => elem.id) }
+
+            console.log('data', newdata);
+            dispatch(saveNewCategory(newdata))
             toast.success('Category saved successfully')
         } catch (error) {
             toast.error(error.message)
         }
+
     }
     return (
         <div>
