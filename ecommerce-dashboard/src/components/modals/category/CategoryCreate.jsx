@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
 
+//create 4 input and add button if add button onclick create new 4 input then this data submit whith formik react js?
+
 const CategoryCreate = () => {
     const dispatch = useDispatch();
     const { genders } = useSelector(state => state.gender)
@@ -51,14 +53,7 @@ const CategoryCreate = () => {
             formdata.append('order', data.value)
             formdata.append('status', data.value)
 
-            let arr = []
-            for (let i = 0; i < select.length; i++) {
-                formdata.append('genders', select[i].value);
-                arr.push(select[i].value)
-            }
-
-
-            let newdata = { ...data, 'genders': select.map((elem) => elem.id) }
+            let newdata = { ...data, 'genders': select.map((elem) => elem.id)}
 
             console.log('data', newdata);
             dispatch(saveNewCategory(newdata))
