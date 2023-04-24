@@ -13,18 +13,28 @@ export const fetchAllProducts = createAsyncThunk(
     const response = await axios.get(
       "https://newramana.azurewebsites.net/api/product"
     );
-    return response.data.data;
+    if (response.status === 200) {
+      return response.data.data;
+    }
+    else {
+      throw new Error('Error get product');
+    }
   }
 );
 
 export const saveNewProduct = createAsyncThunk(
-  "products/getApi",
+  "products/postApi",
   async (payload) => {
     const response = await axios.post(
       "http://irp.ramanacastle.com/api/product/store",
       payload
     );
-    return response.data.data;
+    if (response.status === 200) {
+      return response.data.data;
+    }
+    else {
+      throw new Error('Error creating product');
+    }
   }
 );
 export const deleteProduct = createAsyncThunk(
@@ -51,7 +61,7 @@ export const productSlice = createSlice({
         state.productsData = action.payload;
       })
       .addCase(fetchAllProducts.rejected, (state, action) => {
-        // state.loading = false
+
       })
       .addCase(saveNewProduct.pending, (state) => {
         state.loading = true;

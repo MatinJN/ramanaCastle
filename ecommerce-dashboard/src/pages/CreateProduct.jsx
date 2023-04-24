@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import { Form } from "react-bootstrap";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchAllCategories } from "../features/categories/categorySlice";
@@ -11,8 +11,10 @@ import { fetchAllColors } from "../features/colors/colorSlice";
 import { fetchAllsize } from "../features/size/sizeSlice";
 import { saveNewProduct } from "../features/products/productSlice";
 import { toast, ToastContainer } from "react-toastify";
+import makeAnimated from 'react-select/animated';
+import Select from 'react-select';
 
-//create 4 input and add button if add button onclick create new 4 input then this data submit whith formik react js?
+
 
 const CreateProduct = () => {
   let dispatch = useDispatch();
@@ -22,134 +24,154 @@ const CreateProduct = () => {
   const { materials } = useSelector((state) => state.material);
   const { sizes } = useSelector((state) => state.size);
 
+
+  const fetchingData = async () => {
+    try {
+      await dispatch(fetchAllCategories());
+      await dispatch(fetchAllMaterials());
+      await dispatch(fetchAllColors());
+      await dispatch(fetchAllGenders());
+      await dispatch(fetchAllsize());
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
-    dispatch(fetchAllCategories());
-    dispatch(fetchAllMaterials());
-    dispatch(fetchAllColors());
-    dispatch(fetchAllGenders());
-    dispatch(fetchAllsize());
-  }, []);
-  useEffect(() => {
-    dispatch(fetchAllGenders());
+    fetchingData()
   }, [dispatch]);
 
-  const [data, setData] = useState();
+  const [data, setData] = useState()
   const [select, setSelect] = useState([]);
+  const [image, setImage] = useState([]);
+  const [sizeSel, setSizesel] = useState([]);
+  const [genderSel, setGendersel] = useState([]);
+  const [categorySel, setCategorysel] = useState([]);
+  const [materialSel, setMaterialsel] = useState([]);
+
+  let arrColorId = []
+  let arrColorStock = []
+  let arrsizeSel = sizeSel.map((e) => e['id'])
+  let arrgenderSel = genderSel.map((e) => e['id'])
+  let arrcategorySel = categorySel.map((e) => e['id'])
+  let arrmaterialSel = materialSel.map((e) => e['id'])
+
+
+  const animatedComponents = makeAnimated()
+
+
+  const sizeArr = sizes.map(size => ({
+    label: size.size,
+    value: size.size,
+    id: size.id,
+  }))
+
+
+
+  const genderArr = genders.map(gender => ({
+    label: gender.name,
+    value: gender.name,
+    id: gender.id,
+  }))
+
+  const categoryArr = categories.map(category => ({
+    label: category.name,
+    value: category.name,
+    id: category.id,
+  }))
+
+  const materialArr = materials.map(material => ({
+    label: material.name,
+    value: material.name,
+    id: material.id,
+  }))
+
+
+  const handleSize = (e) => {
+
+    setSizesel(e);
+  };
+
+  const handleGender = (e) => {
+    setGendersel(e);
+  };
+
+  const handleCategory = (e) => {
+    setCategorysel(e);
+  };
+
+  const handleMaterial = (e) => {
+    setMaterialsel(e);
+  };
+
+
+
 
   // input states
-  const [additionalInputs, setAdditionalInputs] = useState([]);
-  const [nextInputNumber, setNextInputNumber] = useState(5);
-  const inputRef = useRef(null);
-
-  // input function
-  // function handleAddInputs() {
-  //   setAdditionalInputs((prevInputs) =>
-  //     [...prevInputs, "", "", ""].map((input, index) => {
-  //       const inputNumber = nextInputNumber + index;
-  //       return {
-  //         options: (inputNumber % 3 === 0) ? ["Stock var", "Stock yox"] : colors.map((e) => e.name),
-  //         name: (inputNumber % 3 === 2) ? "color_id" : (inputNumber % 3 === 0) ? "color_stock" : "color_image",
-  //         value: colors.map((e) => e.id),
-  //         type: (inputNumber % 3 === 2) ? "file" : "select"
-  //       }
-  //     })
-  //   );
-  //   setNextInputNumber(nextInputNumber + 4);
-  // }
-  function handleAddInputs() {
-    setAdditionalInputs((prevInputs) =>
-      [...prevInputs, "", "", ""].map((input, index) => {
-        const inputNumber = nextInputNumber + index;
-        let type;
-        let name;
-        let options;
-        switch (inputNumber % 3) {
-          case 0:
-            name = "color_stock";
-            type = "select";
-            options = ["Stock var", "Stock yox"];
-            break;
-          case 1:
-            name = "card";
-            type = "switch";
-            break;
-          case 2:
-            name = "color_id";
-            type = "file";
-            break;
-          default:
-            break;
-        }
-        return {
-          options,
-          name,
-          value: colors.map((e) => e.id),
-          type,
-        };
-      })
-    );
-    setNextInputNumber(nextInputNumber + 4);
-  }
-
-
-  function handleChange(e) {
-    e.preventDefault();
-
-  }
-
   function handleBlur(e) {
-    const { name, value } = e.target;
+    const { value } = e.target;
     if (value !== "") {
       if (select.map((e) => e.value).includes(value)) {
         return null
       }
       else {
-        setSelect((prev) => [...prev, { name, value }]);
+        if (value === "1" || value === '0') {
+          setSelect((prev) => [...prev, { colorStock: [value] }]);
+        }
+        else {
+          setSelect((prev) => [...prev, { colorId: [value] }]);
+        }
+
       }
 
     }
   }
+  //inputs
+  const [inputList, setinputList] = useState([
+    { color_id: "", color_image: "", color_stock: "" },
+  ]);
+
+  const handleremove = (index) => {
+    const list = [...inputList];
+    list.splice(index, 1);
+    setinputList(list);
+  };
+
+  const handleaddclick = () => {
+    setinputList([
+      ...inputList,
+      { color_id: "", color_image: "", color_stock: "" },
+    ]);
+  };
 
 
-
-  let [arr, setArr] = useState([])
   function handleSubmit(event) {
-
-
-    for (const iter of select) {
-      setArr((prev) => ({ ...prev, iter }))
-    }
-
-
     event.preventDefault();
-    const formdata = new FormData();
-    try {
-      // formdata.append("image", data["image"]);
-      formdata.append("name:az", data["name:az"]);
-      formdata.append("title:az", data["title:az"]);
-      formdata.append("keywords:az", data["keywords:az"]);
-      formdata.append("description:az", data["description:az"]);
-      formdata.append("name:en", data["name:en"]);
-      formdata.append("title:en", data["title:en"]);
-      formdata.append("keywords:en", data["keywords:en"]);
-      formdata.append("description:en", data["description:en"]);
-      formdata.append("slug", data["slug"]);
-      formdata.append("order", data["order"]);
-      formdata.append("status", data["status"]);
-      formdata.append("quantity", data["quantity"]);
-      formdata.append("price", data["price"]);
-      formdata.append("discount_price", data["discount_price"]);
-      formdata.append("stock", data["stock"]);
-      formdata.append("sizes", data["sizes"]);
-      formdata.append("categories", data["categories"]);
-      formdata.append("materials", data["materials"]);
-      formdata.append("genders", data["genders"]);
-      formdata.append("color_image", data["color_image"]);
-      formdata.append("color_id", data["color_id"]);
 
-      let newData = { ...data, select: [select].map((e) => e) };
+    for (let i = 0; i < select.length; i++) {
+      if (select[i]['colorId'] && select[i]['colorId'].length) { // Check if 'colorId' exists and is not empty
+        for (let j = 0; j < select[i]['colorId'].length; j++) {
+          if (select[i]['colorId'][j]) {
+            arrColorId.push(select[i]['colorId'][j]);
+          }
+        }
+      }
+      if (select[i]['colorStock'] && select[i]['colorStock'].length) { // Check if 'colorStock' exists and is not empty
+        for (let j = 0; j < select[i]['colorStock'].length; j++) {
+          if (select[i]['colorStock'][j] !== undefined) {
+            arrColorStock.push(select[i]['colorStock'][j]);
+          }
+        }
+      }
+    }
+    try {
+      let newData = {
+        ...data, size: [...arrsizeSel],
+        category: [...arrcategorySel], gender: [...arrgenderSel], material: [...arrmaterialSel],
+        colors: { color_id: arrColorId, stock: arrColorStock }, color_image: image['color_images'].map(e => e)
+      };
       console.log("newData", newData);
-      // dispatch(saveNewProduct(formdata));
+      dispatch(saveNewProduct(newData));
       toast.success("Category saved successfully");
     } catch (error) {
       toast.error(error.message);
@@ -183,7 +205,7 @@ const CreateProduct = () => {
             type="text"
             placeholder="Enter Gender Name"
             onChange={(e) =>
-              setData({ ...data, "keywords:az": e.target.value })
+              setData((data) => ({ ...data, "keywords:az": e.target.value }))
             }
           />
         </Form.Group>
@@ -276,42 +298,56 @@ const CreateProduct = () => {
           />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
+          <Form.Label>Product Image</Form.Label>
+          <Form.Control
+            type="file"
+            placeholder="Enter Gender Order"
+            onChange={(e) => setData({ ...data, image: e.target.value })}
+          />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
           <Form.Label>Product Size</Form.Label>
-          <Form.Select aria-label="Default select example">
-            <option>Select Size</option>
-            {sizes && sizes.map((size) => (
-              <option value={size.name}>{size.name}</option>
-            ))}
-          </Form.Select>
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+            options={sizeArr}
+            value={sizeSel}
+            onChange={handleSize}
+          />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>Product Categories</Form.Label>
-          <Form.Select aria-label="Default select example">
-            <option>Select Gender</option>
-            {categories && categories.map((category) => (
-              <option>{category.name}</option>
-            ))}
-          </Form.Select>
+          <Form.Label>Product Category</Form.Label>
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+            options={categoryArr}
+            value={categorySel}
+            onChange={handleCategory}
+          />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>Product Materials</Form.Label>
-          <Form.Select aria-label="Default select example">
-            <option>Select Material</option>
-            {materials && materials.map((material) => (
-              <option>{material.name}</option>
-            ))}
-          </Form.Select>
-
+          <Form.Label>Product Material</Form.Label>
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+            options={materialArr}
+            value={materialSel}
+            onChange={handleMaterial}
+          />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>Product Genders</Form.Label>
-          <Form.Select aria-label="Default select example">
-            <option>Select Gender</option>
-            {genders && genders.map((gender) => (
-              <option>{gender.name}</option>
-            ))}
-          </Form.Select>
-
+          <Form.Label>Product Gender</Form.Label>
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+            options={genderArr}
+            value={genderSel}
+            onChange={handleGender}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Product Status</Form.Label>
@@ -333,97 +369,70 @@ const CreateProduct = () => {
             }
           />
         </Form.Group>
-
-        <div>
-          <label>
-            Color Id
-          </label>
-          <select
-            ref={inputRef}
-            onBlur={handleBlur}
-            name="color_id"
-            onChange={handleChange}
-          >
-            <option value="">Stock</option>
-            {colors && colors.map(color => (
-              <option value={color.id}>{color.name}</option>
-            ))}
-          </select>
-          <label htmlFor="">Color Image</label>
-          <input
-            required
-            type="file"
-            name="color_image"
-            placeholder={"type..."}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <label htmlFor="">Color Stock</label>
-          <Form.Check
-                  type='switch'
-                  id="color_stock"
-                  onBlur={handleBlur}
-                  onChange={() => console.log("Switch toggled")}/>
-
-          {/* {additionalInputs.map((input, index) => (
-            <React.Fragment key={index + nextInputNumber}>
-              {input.type === "select" ? (
-                <select onBlur={handleBlur} name={input.name}>
-                  <option value="">Stock</option>
-                  {input.options &&
-                    input.options.map((option, index) => (
-                      <option key={index} value={option==="Stock var"?1:0}>
-                        {option}
-                      </option>
-                    ))}
-                </select>
-              ) : (
+        {inputList.map((x, i) => {
+          return (
+            <div className="row mb-3">
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Product Color</Form.Label>
+                <Form.Select
+                  aria-label="Default select example"
+                  onChange={handleBlur}
+                >
+                  <option>Select Gender</option>
+                  {colors &&
+                    colors.map((color) => <option value={color.id}>{color.name}</option>)}
+                </Form.Select>
+              </Form.Group>
+              <div class="form-group col-md-4">
+                <label>Color Image</label>
                 <input
-                  onBlur={handleBlur}
-                  type={input.type}
-                  name={input.name}
-                  placeholder={`Additional Input ${index + 1}`}
-                />
-              )}
-            </React.Fragment>
-          ))} */}
-          {additionalInputs.map((input, index) => (
-            <React.Fragment key={index + nextInputNumber}>
-              {input.type === "select" ? (
-                <select onBlur={handleBlur} name={input.name}>
-                  <option value="">Stock</option>
-                  {input.options &&
-                    input.options.map((option, index) => (
-                      <option key={index} value={option === "Stock var" ? 1 : 0}>
-                        {option}
-                      </option>
-                    ))}
-                </select>
-              ) : input.type === "switch" ? (
-                <div>
-                  <label htmlFor={input.name}>Card</label>
-                  <Form.Check
-                  type='switch'
-                  id={input.name}
-                  name={input.name}
-                  onBlur={handleBlur}
-                  onChange={() => console.log("Switch toggled")}/>
+                  multiple
+                  type="file"
+                  required
+                  class="form-control"
+                  placeholder="Enter Last Name"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    const paths = [];
 
-                  
-                </div>
-              ) : (
-                <input
-                  onBlur={handleBlur}
-                  type={input.type}
-                  name={input.name}
-                  placeholder={`Additional Input ${index + 1}`}
+                    for (let i = 0; i < files.length; i++) {
+                      paths.push(files[i].name);
+                    }
+                    setImage((prev) => ({ ...prev, color_images: paths }));
+                  }}
                 />
-              )}
-            </React.Fragment>
-          ))}
+              </div>
 
-          <span onClick={handleAddInputs}>+ Add 4 more inputs</span>
-        </div>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Product Color</Form.Label>
+                <Form.Select
+                  aria-label="Default select example"
+                  onChange={handleBlur}
+                >
+                  <option>Select Gender</option>
+                  <option value="1">Stockda Var</option>
+                  <option value="0">Stockda yoxdur</option>
+
+                </Form.Select>
+              </Form.Group>
+              <div class="form-group col-md-2 mt-4">
+                {inputList.length !== 1 && (
+                  <button
+                    className="btn btn-danger mx-1"
+                    onClick={() => handleremove(i)}
+                  >
+                    Remove
+                  </button>
+                )}
+                {inputList.length - 1 === i && (
+                  <button className="btn btn-success" onClick={handleaddclick}>
+                    Add More
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })}
 
         <Button variant="contained" type="submit">
           SEND
@@ -434,5 +443,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
-
+export default CreateProduct
